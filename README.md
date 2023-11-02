@@ -20,14 +20,14 @@ IF: si te suelta un error puedes instalar manualmente usando los comandos
 pip install django 
 pip install pillow
 
-5)Usa el siguiente comando para ir a la carpeta del proyecto
+4)Usa el siguiente comando para ir a la carpeta del proyecto
    cd StudyTimePro
-6)Inica el servidor usando el comando 
+5)Inica el servidor usando el comando 
 python manage.py runserver
 te soltara un enlace que usaras en el navegador en mi caso fue http://127.0.0.1:8000/ pero puede variar 
 
-7)si deseas detener el servidor usa control + C en el terminal
-8)si deseas salir del entorno virtual usa  el comando deactivate 
+6)si deseas detener el servidor usa control + C en el terminal
+7)si deseas salir del entorno virtual usa  el comando deactivate 
 
 
 
