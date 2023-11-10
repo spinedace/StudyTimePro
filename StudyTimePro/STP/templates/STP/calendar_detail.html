@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ calendar.title }}</title>
+</head>
+<body>
+    <h1>{{ calendar.title }}</h1>
+    <ul>
+        {% for event in events %}
+            <li>
+                <a href="{% url 'task_detail' event.pk %}">{{ event.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

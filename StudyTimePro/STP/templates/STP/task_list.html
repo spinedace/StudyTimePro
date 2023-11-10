@@ -1,14 +1,11 @@
 {% if request.user.is_authenticated %}
-    <p>{{request.user}}</p>
+    <p>{{ request.user }}</p>
     <a href="{% url 'logout' %}">Logout</a>
-{%else %}
-<a href="{%url 'login' %}">Login</a>
+{% else %}
+    <a href="{% url 'login' %}">Login</a>
 {% endif %}
-<hr/>
+<hr />
 <h1>My To Do List</h1>
-<a href="{%url 'task-create' %}">add task</a>
-
-
 <table>
     <tr>
         <th>Tareas</th>
@@ -16,12 +13,65 @@
     </tr>
     {% for task in tasks %}
     <tr>
-        <td>{{task.title}}</td>
-        <td><a href="{%url 'task' task.id %}">View</a></td>
-        <td><a href="{%url 'task-update' task.id %}">Edit</a></td>
-        <td><a href="{%url 'task-delete' task.id %}">Delete</a></td>
+        <td>{{ task.title }}</td>
+        <td>
+            {% if task.priority == 'choice1' %}
+                Baja
+            {% elif task.priority == 'choice2' %}
+                Media
+            {% elif task.priority == 'choice3' %}
+                Alta
+            {% else %}
+                Sin prioridad
+            {% endif %}
+        </td>
+        <td><a href="{% url 'task' task.id %}">View</a></td>
+        <td><a href="{% url 'task-update' task.id %}">Edit</a></td>
+        <td><a href="{% url 'task-delete' task.id %}">Delete</a></td>
+        <td> <form method="post" action="{% url 'task-toggle-complete' task.id %}">
+            {% csrf_token %}
+            <label for="task_{{ task.id }}"></label>
+            <input type="checkbox" id="task_{{ task.id }}" name="complete" {% if task.complete %}checked{% endif %}>
+            <input type="hidden" name="task_id" value="{{ task.id }}">
+        </form>
+        </td>
     </tr>
     {% empty %}
-    <h3>Vacio</h3>
+    <h3>Vacío</h3>
     {% endfor %}
 </table>
+
+<p>Total de tareas pendientes: {{ count }}</p>
+<a href="{% url 'task-create' %}">Crear Nueva Tarea</a>
+
+<script>
+    // Obtén todas las casillas de verificación en el documento
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    // Agrega un controlador de eventos a cada casilla de verificación
+    checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', function() {
+            const form = this.closest('form');
+            // Envía una solicitud POST al servidor
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken') // Obtiene el token CSRF de las cookies
+                }
+            })
+            .then(() => {
+                // Recarga la página después de que se complete la solicitud
+                location.reload();
+            });
+        });
+    });
+
+    // Función para obtener el token CSRF de las cookies
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+</script>
+
