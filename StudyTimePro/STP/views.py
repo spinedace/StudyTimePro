@@ -143,3 +143,30 @@ class CalendarDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['events'] = self.object.events.all()
         return context
+
+from django.shortcuts import render
+from django.http import HttpResponse
+
+# Create your views here.
+
+TEMPLATES_DIRS = (
+    'os.path.join(BASE_DIR,"templates")'
+)
+
+def index(request):
+    return render(request, "STP/index.html")
+
+def calendar(request):
+    return render(request, "STP/calendar.html")
+
+def estadisticas(request):
+    return render(request, "STP/estadisticas.html")
+
+def ayuda(request):
+    return render(request, "STP/ayuda.html")
+
+def login2(request):
+    return render(request, "STP/login2.html")
+
+# def register(request):
+#     return render(request, "STP/register.html")

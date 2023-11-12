@@ -1,10 +1,15 @@
-{% if request.user.is_authenticated %}
+{% extends 'STP/index_master.html' %}
+
+
+
+{% block content %}
+<!-- {% if request.user.is_authenticated %}
     <p>{{ request.user }}</p>
     <a href="{% url 'logout' %}">Logout</a>
 {% else %}
     <a href="{% url 'login' %}">Login</a>
-{% endif %}
-<hr />
+{% endif %} -->
+<!-- <hr />
 <h1>My To Do List</h1>
 <table>
     <tr>
@@ -42,9 +47,93 @@
 </table>
 
 <p>Total de tareas pendientes: {{ count }}</p>
-<a href="{% url 'task-create' %}">Crear Nueva Tarea</a>
+<a href="{% url 'task-create' %}">Crear Nueva Tarea</a> -->
 
-<script>
+
+
+
+<!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">            
+            
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Lista de Tareas</h2>
+
+                   
+                    <div class="clearfix">
+                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="{% url 'task-create' %}" class="btn btn-primary btn-xs"> <i class="fa fa-tasks"></i> Crear Nueva Tarea</a>
+                    </div>
+                  </div>
+                  <div class="x_content">
+
+                    <p>Tareas pendientes: {{ count }}</p>
+
+                    <!-- start project list -->
+                    <table class="table table-striped projects">
+                      <thead>
+                        <tr>
+                          <th style="width: 1%">#</th>
+                          <th style="width: 20%">Titulo</th>
+                          <th style="width: 30%">Descripciónn</th>
+                          <th style="width: 10%">Prioridad</th>
+                          <th style="width: 5%">Completado</th>
+                          <th style="width: 25%">#Edit</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for task in tasks %}
+                            <tr>
+                              <td>#</td>
+                              <td><a>{{ task.title }}</a>
+                                <!-- <br />
+                                <small>Created 01.01.2015</small> -->
+                              </td>
+                              <td>
+                               <a>{{ task.description }}</a>
+                              </td>
+                              <td>
+                               <a>{% if task.priority == 'choice1' %}
+                Baja
+            {% elif task.priority == 'choice2' %}
+                Media
+            {% elif task.priority == 'choice3' %}
+                Alta
+            {% else %}
+                Sin prioridad
+            {% endif %}</a>
+                              </td>
+
+                              <td>
+                               <form method="post" action="{% url 'task-toggle-complete' task.id %}">
+            {% csrf_token %}
+            <label for="task_{{ task.id }}" ></label>
+            <input type="checkbox" id="task_{{ task.id }}" name="complete" {% if task.complete %}checked{% endif %}>
+            <input type="hidden" name="task_id" value="{{ task.id }}">
+        </form>
+                              </td>                         
+                              <td>
+                                <a href="{% url 'task' task.id %}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver </a>
+                                <a href="{% url 'task-update' task.id %}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+                                <a href="{% url 'task-delete' task.id %}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Borrar </a>
+                              </td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- end project list -->
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script>
     // Obtén todas las casillas de verificación en el documento
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
@@ -74,4 +163,6 @@
         if (parts.length === 2) return parts.pop().split(';').shift();
     }
 </script>
+        <!-- /page content -->
+{% endblock content %}
 
