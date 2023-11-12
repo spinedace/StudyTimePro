@@ -5,29 +5,74 @@ Frank Medina - striw-ey
 Santiago Pineda - spinedace  
 Sergio Reita - sreita  
 
-Para configurar el proyecto ve a la terminal y sigue los siguientes pasos
+## como configurar el proyecto 
 
-1) crea el entorno virtual , preferiblemente en la carpeta del repositorio usando el comando
-python -m venv STPenv
+prerequisito:tener python instalado
 
-2)Inicializa el entorno virtual usando el comando
-STPenv\Scripts\activate
+1.Clona el repositorio usando el comando
+```
+git clone https://github.com/spinedace/StudyTimePro.git
+```
+2.Entra en la carpeta usando el comando
+```
+cd StudyTimePro
+```
+3.Crea el entorno virtual , preferiblemente en la carpeta del repositorio usando el comando
 
-3)Usa el siguiente comando para instalar los requerimientos en tu entorno virtual
+En macOs y linux (si estas usando python 3 puedes usalo tambien en windows)
+```
+python3 -m venv venv
+```
+en windows
+```
+python -m venv venv
+```
+4.Activa el entorno virtual
+
+en linux y macOS
+
+```
+source venv/bin/activate
+```
+en windows
+
+```
+venv/Scripts\activate
+```
+5.Instala los requerimientos
+
+```
 pip install -r requirements.txt
+```
+6.Crea las migraciones
 
-IF: si te suelta un error puedes instalar manualmente usando los comandos 
-pip install django 
-pip install pillow
+```
+python manage.py makemigrations
+```
+7.Aplica las migracion
 
-4)Usa el siguiente comando para ir a la carpeta del proyecto
-   cd StudyTimePro
-5)Inica el servidor usando el comando 
+```
+python manage.py migrate
+```
+8. Crea un super usuario
+
+```
+python manage.py createsuperuser
+```
+despues de ejecutar este comando te pedira correo,usuario y contraseña para crear el super usuario ,puedes omitir rellenar el correo pero no los otros dos campos
+
+9.Correr el servidor
+
+```
 python manage.py runserver
-te soltara un enlace que usaras en el navegador en mi caso fue http://127.0.0.1:8000/ pero puede variar 
+```
 
-6)si deseas detener el servidor usa control + C en el terminal
-7)si deseas salir del entorno virtual usa  el comando deactivate 
+## Al Finalizar para salir 
 
+1.Usa el control + C para detener el servidor 
 
+2. Para salir de entorno virtual usa el comando 
 
+```
+deactivate
+```
