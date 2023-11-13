@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib import admin
 from .views import TaskList,TaskDetail,TaskCreate,TaskUpdate,DeleteView,CustomLoginView,RegisterPage,TaskToggleCompleteView,GetTasksAsJSON
 from django.contrib.auth.views import LogoutView
-from .views import CalendarView, CalendarDetailView
+from .views import CalendarView
 
 from django import views
 from . import views
@@ -27,7 +27,6 @@ urlpatterns =[
 
 
     path('calendar/', CalendarView.as_view(), name='calendar'),
-    path('calendar/<int:pk>/', CalendarDetailView.as_view(), name='calendar_detail'),
 
     path('api/tasks/', GetTasksAsJSON.as_view(), name='get_tasks_as_json'),
     #######
@@ -38,6 +37,6 @@ urlpatterns =[
     path('calendar', views.calendar, name="calendar"),
     path('estadisticas', views.estadisticas, name="estadisticas"),
     path('ayuda', views.ayuda, name="ayuda"),
-    path('login', views.login, name="login"),   
+    
 
     ]

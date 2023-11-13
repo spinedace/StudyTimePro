@@ -30,8 +30,6 @@
     <!-- Custom Theme Style -->
     <link href="{% static '/FrWork/admin_lte/build/css/custom.min.css' %}" rel="stylesheet">
     <!-- FullCalendar -->
-  <link href="{% static '/FrWork/admin_lte/vendors/fullcalendar/dist/fullcalendar.css' %}" rel="stylesheet">
-  <link href="{% static '/FrWork/admin_lte/vendors/fullcalendar/dist/fullcalendar.print.css' %}" rel="stylesheet" media="print">
 
 <link href="{% static '/FrWork/admin_lte/vendors/normalize-css/normalize.css' %}" rel="stylesheet">
   <link href="{% static '/FrWork/admin_lte/vendors/ion.rangeSlider/css/ion.rangeSlider.css' %}" rel="stylesheet">
@@ -81,18 +79,18 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="index"><i class="fa fa-user"></i> Perfil</a></li>
-                      <li><a href="estadisticas"><i class="fa fa-bar-chart-o"></i> Estadisticas</a></li>
-                      <li><a href="ayuda"><i class="fa fa-question-circle"></i> ¿Ayuda?</a></li>                     
+                      <li><a href="{% url 'index' %}"><i class="fa fa-user"></i> Perfil</a></li>
+                      <li><a href="{% url 'estadisticas' %}"><i class="fa fa-bar-chart-o"></i> Estadisticas</a></li>
+                      <li><a href="{% url 'ayuda' %}"><i class="fa fa-question-circle"></i> ¿Ayuda?</a></li>                     
                     </ul>
                   </li>
-                  <li><a a href=""><i class="fa fa-table"></i> Lista de Tareas <span class="fa fa-chevron-down"></span></a>
+                  <li><a a href="{% url 'tasks' %}"><i class="fa fa-table"></i> Lista de Tareas <span class="fa fa-chevron-down"></span></a>
                     
                   </li>                  
-                  <li><a a href="calendar"><i class="fa fa-calendar"></i> Calendario <span class="fa fa-chevron-down"></span></a>
+                  <li><a a href="{% url 'calendar' %}"><i class="fa fa-calendar"></i> Calendario <span class="fa fa-chevron-down"></span></a>
                     
                   </li>
-                  <li><a a href="logout"><i class="fa fa-sign-out"></i> Log Out <span class="fa fa-chevron-down"></span></a>
+                  <li><a a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Log Out <span class="fa fa-chevron-down"></span></a>
                     
                   </li>                
                                  
@@ -192,8 +190,7 @@
     <script src="{% static '/FrWork/admin_lte/vendors/moment/min/moment.min.js' %}"></script>
     <script src="{% static '/FrWork/admin_lte/vendors/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
      <!-- FullCalendar -->
-    <script src="{% static '/FrWork/admin_lte/vendors/moment/min/moment.min.js' %}"></script>
-    <script src="{% static '/FrWork/admin_lte/vendors/fullcalendar/dist/fullcalendar.min.js' %}"></script>
+
      <!-- morris.js -->
     <script src="{% static '/FrWork/admin_lte/vendors/raphael/raphael.min.js' %}"></script>
     <script src="{% static '/FrWork/admin_lte/vendors/morris.js/morris.min.js' %}"></script>

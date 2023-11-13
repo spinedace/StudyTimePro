@@ -32,13 +32,4 @@ class Task(models.Model):
     class Meta:
         ordering = ['complete']
 
-class Calendar(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(default='Untitled Calendar', max_length=200, null=False)
-    description = models.TextField(blank=True)
-    start_date = models.DateField(default=timezone.now, null=False)
-    end_date = models.DateField()
-    events = models.ManyToManyField(Task, blank=True)
 
-    def __str__(self):
-        return self.title

@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
-from .models import Task,Calendar
+from .models import Task
 
 from django.views.generic.edit import CreateView
 
@@ -44,9 +44,15 @@ class RegisterPage(FormView):
             login(self.request, user)
          return super(RegisterPage,self).form_valid(form)
     def get(self, *args, **kwargs):
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             return redirect('talks')
         return super(RegisterPage, self).get(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(context['form'])  # Añade esta línea para imprimir el contenido del formulario
+        return context
+
 
 #lista de tareas
 class TaskList(LoginRequiredMixin, ListView):
@@ -116,33 +122,17 @@ class GetTasksAsJSON(View):
 
 
 
-class Event(LoginRequiredMixin,ListView):
-    model= Task
-    template_name = 'STP/calendar.html'
+class CalendarView(LoginRequiredMixin, View):
+    template_name = 'STP/calendar_list.html'
 
-    def get_queryset(self):
-        queryset= self.model.objects.filter(completed=True,user=self.request.user)
-        return queryset
-
-class CalendarView(LoginRequiredMixin, ListView):
-    model = Calendar
-    context_object_name = 'calendars'
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['calendars'] = context['calendars'].filter(user=self.request.user)
+        # Puedes agregar datos adicionales al contexto según sea necesario
         return context
 
-
-class CalendarDetailView(LoginRequiredMixin, DetailView):
-    model = Calendar
-    context_object_name = 'calendar'
-    template_name = 'STP/calendar_detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['events'] = self.object.events.all()
-        return context
 
 from django.shortcuts import render
 from django.http import HttpResponse
