@@ -44,7 +44,21 @@
   <link href="{% static '/FrWork/admin_lte/vendors/switchery/dist/switchery.min.css' %}" rel="stylesheet">
   <!-- starrr -->
   <link href="{% static '/FrWork/admin_lte/vendors/cropper/dist/cropper.min.css' %}" rel="stylesheet">
+ 
+<!-- Calendario david -->
+ <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <script>
 
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          events: '{% url "get_tasks_as_json" %}',
+        });
+        calendar.render();
+      });
+
+    </script>
   </head>
 
   <body class="nav-md">
@@ -190,6 +204,7 @@
     <script src="{% static '/FrWork/admin_lte/vendors/moment/min/moment.min.js' %}"></script>
     <script src="{% static '/FrWork/admin_lte/vendors/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
      <!-- FullCalendar -->
+
 
      <!-- morris.js -->
     <script src="{% static '/FrWork/admin_lte/vendors/raphael/raphael.min.js' %}"></script>

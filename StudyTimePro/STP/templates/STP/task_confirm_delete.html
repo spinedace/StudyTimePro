@@ -1,7 +1,71 @@
-<a href="{% url 'tasks' %}"></a>
+{% extends 'STP/index_master.html' %}
+
+
+
+{% block content %}
+<!-- <a href="{% url 'tasks' %}"></a>
 <a href="{% url 'tasks' %}">Go back</a>
 <form method="POST" >
     {% csrf_token %}
     <P>seguro que deseas eliminar esta tarea?"{{task}}"</P>
     <input type="submit" value="Delete">
-</form>
+</form> -->
+
+<!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class="page-title">
+                        <div class="title_left">
+                            <h3>Eliminar Tarea</h3>
+                        </div>
+
+                        <div class="title_right">
+                            <div class="col-md-5 col-sm-5  form-group pull-right top_search">
+                                <div >
+                                    
+                                    <span >
+                                       <a href="{% url 'tasks' %}"> <button class="btn btn-primary" type="button">Volver Lista de Tareas</button></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 ">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <!-- <h2>Eliminar Tarea<small></small></h2> -->
+                                    
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <br />
+                                    <form method="post" action="" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                                        {% csrf_token %}
+                                        <H2>Seguro que deseas eliminar esta tarea?  "{{task}}"</H2>
+                                         <div class="item form-group">
+                                            <div class="col-md-6 col-sm-6 offset-md-3">
+                                                <input  class="btn btn-success" type = "submit" value="Borrar">
+                                                <!-- <button type="submit" class="btn btn-success">Submit</button> -->
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  
+
+                    
+
+                   
+
+
+                   
+                </div>
+            </div>
+            <!-- /page content -->
+
+{% endblock content %}
