@@ -23,6 +23,7 @@ from django.http import JsonResponse
 # Create your views here.
 
 #login/register
+
 class CustomLoginView(LoginView):
     template_name = 'STP/login.html'
     fields = '__all__'
@@ -82,6 +83,7 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
     fields = ['title','description','created','due_date','priority','complete']
     success_url = reverse_lazy('tasks')
+
 class TaskToggleCompleteView(View):
     def post(self, request, task_id):
         # Obtén la tarea
