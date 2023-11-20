@@ -7,6 +7,7 @@ from .views import CalendarView
 from django import views
 from . import views
 
+from django.contrib import admin
 
 urlpatterns =[
     path('login/',CustomLoginView.as_view(), name='login'),
@@ -21,7 +22,7 @@ urlpatterns =[
 
     path('task-toggle-complete/<int:task_id>/', TaskToggleCompleteView.as_view(), name='task-toggle-complete'),
 
-
+    path('admin/', admin.site.urls),
 
         # Rutas para la funcionalidad de calendario
 

@@ -11,7 +11,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
 from .models import Task
-
 from django.views.generic.edit import CreateView
 
 from django.views.generic import ListView
@@ -45,7 +44,7 @@ class RegisterPage(FormView):
          return super(RegisterPage,self).form_valid(form)
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return redirect('talks')
+            return redirect('tasks')
         return super(RegisterPage, self).get(*args, **kwargs)
 
     def get_context_data(self, **kwargs):

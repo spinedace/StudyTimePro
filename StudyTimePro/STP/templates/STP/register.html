@@ -31,6 +31,12 @@
 
     <!-- Custom Theme Style -->
     <link href="/static/FrWork/admin_lte/build/css/custom.min.css" rel="stylesheet">
+
+     <!-- SweetAlert -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.11/dist/sweetalert2.all.min.js"></script>
+
+
   </head>
 
   <body class="login">
@@ -48,17 +54,16 @@
 
               {% csrf_token %}
               <!-- {{form.as_p}} -->
-              <!-- <label>{{form.username.label}}</label>
+               <label>{{form.username.label}}</label>
               {{form.username}}
               <label>{{form.password1.label}}</label>
               {{form.password1}}
               <label>{{form.password2.label}}</label>
-              {{form.password2}} -->
-              {{form.as_p}}
+              {{form.password2}}
               <div>
                 <input  class="btn btn-default submit" type="submit" value="Registrarse">
-                <!-- <a class="btn btn-default submit" href="index">Entrar</a> -->
-                 <a class="reset_pass" href="#">Ya esta registrado?</a> 
+                <!-- <a class="btn btn-default submit" href="index">Entrar</a> 
+                 <a class="reset_pass" href="#">Ya esta registrado?</a> -->
               </div>
 
               <div class="clearfix"></div>
@@ -83,6 +88,30 @@
     
       </div>
     </div>
+    <!-- Scripts para mostrar notificaciones con SweetAlert -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    {% if form.errors %}
+      var errorMessage = '<br>';
+      
+      {% for field in form %}
+        {% if field.errors %}
+          errorMessage += '{{ field.errors|join:"<br>" }}<br>';
+        {% endif %}
+      {% endfor %}
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        html: errorMessage
+      });
+    {% endif %}
+  });
+</script>
+
+
+
+    
   </body>
 </html>
 
