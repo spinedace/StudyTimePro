@@ -19,6 +19,7 @@ from django.views.generic import DetailView
 from django.views import View
 from django.http import JsonResponse
 
+from django.utils import timezone
 
 # Create your views here.
 
@@ -58,12 +59,27 @@ class RegisterPage(FormView):
 class TaskList(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'tasks'
+    template_name = 'STP/task_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context ['tasks'].filter(user=self.request.user)
         context['count'] = context ['tasks'].filter(complete=False).count()
+        # Filtra tareas vencidas
+        context['tasks_overdue'] = context ['tasks'].filter(complete=False, due_date__lt=timezone.now())
+        context['count_overdue'] = context ['tasks'].filter(complete=False, due_date__lt=timezone.now()).count()
+
+        # Filtra tareas actuales
+        context['tasks_current'] = context ['tasks'].filter(complete=False, due_date__gte=timezone.now())
+        context['count_current'] = context ['tasks'].filter(complete=False, due_date__gte=timezone.now()).count()
+
+        # Filtra tareas completadas
+        context['tasks_completed'] = context ['tasks'].filter(complete=True)
+        context['count_completed'] = context ['tasks_completed'].filter(complete=True,).count()
         return context
+
+    
+
 
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
