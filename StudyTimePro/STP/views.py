@@ -21,6 +21,9 @@ from django.http import JsonResponse
 
 from django.utils import timezone
 
+import datetime 
+import calendar as cal
+
 # Create your views here.
 
 #login/register
@@ -148,6 +151,37 @@ class CalendarView(LoginRequiredMixin, View):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Puedes agregar datos adicionales al contexto según sea necesario
+        return context
+
+
+#Estadísticas
+
+
+class GetInfo(LoginRequiredMixin, ListView):
+    model = Task
+    context_object_name = 'tasks'
+    template_name = 'STP/estadisticas.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tasks'] = context ['tasks'].filter(user=self.request.user)
+        
+        # Filtra tareas completadas
+        context['tasks_completed'] = context ['tasks'].filter(complete=True)
+        context['count_completed'] = context ['tasks_completed'].filter(complete=True,).count()
+
+        #exp
+        now = datetime.datetime.now()
+        num_days = cal.monthrange(now.year, now.month)[1]
+        num_task_for_day = [0 for _ in range(num_days)]
+
+        for task in context['tasks_completed']:
+            if task.created.month == now.month:
+                if task.complete:
+                    num_task_for_day[task.created.day - 1] += 1
+
+        context['num_task_for_day'] = num_task_for_day
+
         return context
 
 
