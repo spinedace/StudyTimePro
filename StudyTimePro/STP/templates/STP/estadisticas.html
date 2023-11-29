@@ -1,310 +1,267 @@
 {% extends 'STP/index_master.html' %}
 
 {% block content %}
-
-    <!-- page content -->
-        <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row">
-            <div class="col-md-3">
-              <div class="tile_count">
-                <div class="tile_stats_count">
-                  <span class="count_top"><i class="fa fa-user"></i> Tareas completadas</span>
-                  <div class="count">{{count_completed}}</div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="tile_count">
-                <div class="tile_stats_count">
-                  <span class="count_top"><i class="fa fa-clock-o"></i> Tareas pendientes</span>
-                  <div class="count">{{count_current}}</div>
-                </div>
-              </div>
-            </div>
-              <!-- Agrega más elementos en columnas adicionales si es necesario -->
-          </div>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+<script>
+  window.onload = function () {
+  
+  var chart = new CanvasJS.Chart("chartContainer", {
+    animationEnabled: true,
+   
+    data: [{
+      type: "doughnut",
+      startAngle: 60,
+      innerRadius: 35,
+      indexLabelFontSize: 17,
+      indexLabel: "{label} - #percent%",
+      toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+      dataPoints: [
+        { y: {{ percent_completed }}, label: "completadas" },
+        { y: {{ percent_overdue }}, label: "Vencidas" },
+        { y: {{ percent_current }}, label: "Actuales" },
         
+      ]
+    }]
+  });
+  chart.render();
+  
+  }
+</script>
+  
 
-          <!-- /top tiles --> 
+<!-- page content -->
+<div class="right_col" role="main">
+  <!-- top tiles -->
+  <div class="row">
+    <div class="col-md-3">
+      <div class="tile_count">
+        <div class="tile_stats_count">
+          <span class="count_top"><i class="fa fa-user"></i> Tareas completadas</span>
+          <div class="count">{{count_completed}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="tile_count">
+        <div class="tile_stats_count">
+          <span class="count_top"><i class="fa fa-clock-o"></i> Tareas pendientes</span>
+          <div class="count">{{count_current}}</div>
+        </div>
+      </div>
+    </div>
+      <!-- Agrega más elementos en columnas adicionales si es necesario -->
+  </div>
 
-          <div class="row">
-            <div class="col-md-12 col-sm-12 ">
-              <div class="dashboard_graph">
 
-                <div class="row x_title">
-                  <div class="col-md-6">
-                    <h3>Historial del mes</h3>
-                  </div>
-                  <div class="col-md-6">
-                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                      
-                      <h3>{{ month }}</h3>
-                    </div>
-                  </div>
-                </div>
+  <!-- /top tiles --> 
 
-                <div class="col-md-12 col-sm-12 mx-auto"> <!--Grafica superior-->
+  <div class="row">
+    <div class="col-md-12 col-sm-12 ">
+      <div class="dashboard_graph">
 
-                  <canvas id="barChart" width="800" height="400"></canvas>
-                  <script>
-                    const datosTareasCompletadas = "{{ tasks_completed }}"
-                    const num_task_for_day = "{{ num_task_for_day }}".split(', ').map(function(item) {
-                      return parseInt(item.trim());
-                    });
-
-                    const ctx = document.getElementById('barChart').getContext('2d');
-                    const barChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: Array.from({ length: num_task_for_day.length }, (_, i) => i + 1), // Días del mes
-                            datasets: [{
-                                label: 'Tareas completadas por dia',
-                                data: num_task_for_day,
-                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    ticks: {
-                                      stepSize: 1
-                                    }
-                                }
-
-                            }
-                        }
-                    });
-                  </script>
-                </div>
-
-                <div class="clearfix"></div>
-              </div>
+        <div class="row x_title">
+          <div class="col-md-6">
+            <h3>Historial del mes</h3>
+          </div>
+          <div class="col-md-6">
+            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+              
+              <h3>{{ month }}</h3>
             </div>
           </div>
-          
-          <br />
+        </div>
 
-          <div class="row">
-
-
-            <div class="col-md-4 col-sm-4 ">
-              <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                  <h2>App Versions</h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Settings 1</a>
-                          <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <h4>App Usage across versions</h4>
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>0.1.5.2</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 66%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>123k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>0.1.5.3</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>53k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>0.1.5.4</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>23k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>0.1.5.5</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 5%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>3k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="widget_summary">
-                    <div class="w_left w_25">
-                      <span>0.1.5.6</span>
-                    </div>
-                    <div class="w_center w_55">
-                      <div class="progress">
-                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
-                          <span class="sr-only">60% Complete</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="w_right w_20">
-                      <span>1k</span>
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4 col-sm-4 ">
-              <div class="x_panel tile fixed_height_320 overflow_hidden">
-                <div class="x_title">
-                  <h2>Device Usage</h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Settings 1</a>
-                          <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <table class="" style="width:100%">
-                    <tr>
-                      <th style="width:37%;">
-                        <p>Top 5</p>
-                      </th>
-                      <th>
-                        <div class="col-lg-7 col-md-7 col-sm-7 ">
-                          <p class="">Device</p>
-                        </div>
-                        <div class="col-lg-5 col-md-5 col-sm-5 ">
-                          <p class="">Progress</p>
-                        </div>
-                      </th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                      </td>
-                      <td>
-                        <table class="tile_info">
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square blue"></i>IOS </p>
-                            </td>
-                            <td>30%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square green"></i>Android </p>
-                            </td>
-                            <td>10%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square purple"></i>Blackberry </p>
-                            </td>
-                            <td>20%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square aero"></i>Symbian </p>
-                            </td>
-                            <td>15%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p><i class="fa fa-square red"></i>Others </p>
-                            </td>
-                            <td>30%</td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="col-md-12 col-sm-12 mx-auto"> <!--Grafica superior-->
 
           <canvas id="barChart" width="800" height="400"></canvas>
           <script>
-              // Datos de ejemplo: reemplaza esto con los datos de tus tareas completadas por día
-              const datosTareasPorDia = [5, 10, 8, 15, 12, 6, 7, 3, 9, 11, 14, 18, 20, 25, 22, 19, 16, 10, 7, 4, 8, 12, 14, 17, 21, 23, 26, 28, 30, 27];
-              
-              const ctx = document.getElementById('barChart').getContext('2d');
-              const barChart = new Chart(ctx, {
-                  type: 'bar',
-                  data: {
-                      labels: Array.from({ length: datosTareasPorDia.length }, (_, i) => i + 1), // Días del mes
-                      datasets: [{
-                          label: 'Tareas Completadas por Día',
-                          data: datosTareasPorDia,
-                          backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                          borderColor: 'rgba(54, 162, 235, 1)',
-                          borderWidth: 1
-                      }]
-                  },
-                  options: {
-                      scales: {
-                          y: {
-                              beginAtZero: true
-                          }
-                      }
-                  }
-              });
+            const datosTareasCompletadas = "{{ tasks_completed }}"
+            const num_task_for_day = "{{ num_task_for_day }}".split(', ').map(function(item) {
+              return parseInt(item.trim());
+            });
+
+            const ctx = document.getElementById('barChart').getContext('2d');
+            const barChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Array.from({ length: num_task_for_day.length }, (_, i) => i + 1), // Días del mes
+                    datasets: [{
+                        label: 'Tareas completadas por dia',
+                        data: num_task_for_day,
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                              stepSize: 1
+                            }
+                        }
+
+                    }
+                }
+            });
           </script>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+  
+  <br />
+
+  <div class="row">
+
+
+    <div class="col-md-4 col-sm-4 ">
+      <div class="x_panel tile fixed_height_320">
+        <div class="x_title">
+          <h2>Estadistica Tareas</h2>
+          
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <h4>Estadistica Studytime Pro</h4>
+          <div class="widget_summary">
+            <div class="w_left w_25">
+              <span>Completas</span>
+            </div>
+            <div class="w_center w_55">
+              <div class="progress">
+                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent_completed }}%;">
+                  
+                </div>
+              </div>
+            </div>
+            <div class="w_right w_20">
+              <span>{{ count_completed }}</span>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="widget_summary">
+            <div class="w_left w_25">
+              <span>Vencidas</span>
+            </div>
+            <div class="w_center w_55">
+              <div class="progress">
+                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent_overdue }}%;">
+                  
+                </div>
+              </div>
+            </div>
+            <div class="w_right w_20">
+              <span>{{ count_overdue }}</span>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="widget_summary">
+            <div class="w_left w_25">
+              <span>Actuales</span>
+            </div>
+            <div class="w_center w_55">
+              <div class="progress">
+                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent_current }}%;">
+                
+                </div>
+              </div>
+            </div>
+            <div class="w_right w_20">
+              <span>{{ count_current }}</span>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="widget_summary">
+            <div class="w_left w_25">
+              <span>Totales</span>
+            </div>
+            <div class="w_center w_55">
+              <div class="progress">
+                <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                
+                </div>
+              </div>
+            </div>
+            <div class="w_right w_20">
+              <span>{{ total }}</span>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          
+          
 
         </div>
-        <!-- /page content -->
+      </div>
+    </div>
+
+    <div class="col-md-8 col-sm-8 ">
+      <div class="x_panel tile fixed_height_320 overflow_hidden">
+        <div class="x_title">
+          <h2>Estadistica Tareas</h2>
+          
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <table class="" style="width:100%">
+            <tr>
+              <th style="width:60%;">
+                <p>Tareas</p>
+              </th>
+              <th>
+                <div class="col-lg-7 col-md-7 col-sm-7 ">
+                  <p class="">Estado</p>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 ">
+                  <p class="">Porcentaje</p>
+                </div>
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <div id="chartContainer" style="height: 180px; width: 100%;"></div>
+              </td>
+              <td>
+                <table class="tile_info">
+                  <tr>
+                    <td>
+                      <p><i class="fa fa-square blue"></i>Completadas </p>
+                    </td>
+                    <td>{{ percent_completed }}%</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><i class="fa fa-square red"></i>Vencidas </p>
+                    </td>
+                    <td>{{ percent_overdue }}%</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p><i class="fa fa-square green"></i>Actuales </p>
+                    </td>
+                    <td>{{ percent_current }}%</td>
+                  </tr>
+                  
+                  
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    
+
+  </div>
+
+</div>
+<!-- /page content -->
 {% endblock %}

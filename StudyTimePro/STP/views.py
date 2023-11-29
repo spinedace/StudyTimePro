@@ -179,6 +179,13 @@ class GetInfo(LoginRequiredMixin, ListView):
         context['tasks_completed'] = context ['tasks'].filter(complete=True)
         context['count_completed'] = context ['tasks_completed'].filter(complete=True,).count()
 
+        #estadisticas
+        context['total']=context['count_overdue']+context['count_completed']+context['count_current']
+        context['percent_overdue']=int((context['count_overdue']/context['total'])*100)
+        context['percent_current']=int((context['count_current']/context['total'])*100)
+        context['percent_completed']=int((context['count_completed']/context['total'])*100)
+
+
         # Contador de tareas completadas por día
         now = datetime.datetime.now()
         num_days = cal.monthrange(now.year, now.month)[1]
