@@ -165,12 +165,21 @@ class GetInfo(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context ['tasks'].filter(user=self.request.user)
+        context['count'] = context ['tasks'].filter(complete=False).count()
+        
+        # Filtra tareas vencidas
+        context['tasks_overdue'] = context ['tasks'].filter(complete=False, due_date__lt=timezone.now())
+        context['count_overdue'] = context ['tasks'].filter(complete=False, due_date__lt=timezone.now()).count()
+
+        # Filtra tareas actuales
+        context['tasks_current'] = context ['tasks'].filter(complete=False, due_date__gte=timezone.now())
+        context['count_current'] = context ['tasks'].filter(complete=False, due_date__gte=timezone.now()).count()
         
         # Filtra tareas completadas
         context['tasks_completed'] = context ['tasks'].filter(complete=True)
         context['count_completed'] = context ['tasks_completed'].filter(complete=True,).count()
 
-        #exp
+        # Contador de tareas completadas por día
         now = datetime.datetime.now()
         num_days = cal.monthrange(now.year, now.month)[1]
         num_task_for_day = [0 for _ in range(num_days)]
@@ -180,6 +189,7 @@ class GetInfo(LoginRequiredMixin, ListView):
                 if task.complete:
                     num_task_for_day[task.created.day - 1] += 1
 
+        context['month'] = cal.month_name[now.month]
         context['num_task_for_day'] = num_task_for_day
 
         return context
