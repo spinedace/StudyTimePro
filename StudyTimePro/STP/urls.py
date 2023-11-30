@@ -4,6 +4,9 @@ from .views import TaskList,TaskDetail,TaskCreate,TaskUpdate,DeleteView,CustomLo
 from django.contrib.auth.views import LogoutView
 from .views import CalendarView
 
+from .views import UserDetailView, UserUpdateView
+
+
 from django import views
 from . import views
 
@@ -23,6 +26,9 @@ urlpatterns =[
     path('task-toggle-complete/<int:task_id>/', TaskToggleCompleteView.as_view(), name='task-toggle-complete'),
 
     
+
+    path('user/', UserDetailView.as_view(), name='user_detail'),
+    path('user/edit/', UserUpdateView.as_view(), name='user_edit'),
 
     # Rutas para la funcionalidad de calendario
 

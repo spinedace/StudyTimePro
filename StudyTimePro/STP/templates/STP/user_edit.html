@@ -1,0 +1,22 @@
+{% extends 'STP/index_master.html' %}
+
+{% block content %}
+
+    <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Editar Perfil del Usuario</h3>
+<form method="post" action="">
+    {% csrf_token %}
+    <label>{{form.username.label}}</label>
+    {{form.username}}
+    <label>{{form.password1.label}}</label>
+    {{form.password1}}
+    <label>{{form.password2.label}}</label>
+    {{form.password2}}
+    <button type="submit">Guardar</button>
+    <a href="{% url 'user_detail' %}">Cancelar</a>
+</form>
+{% endblock %}

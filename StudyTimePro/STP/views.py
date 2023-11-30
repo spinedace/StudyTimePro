@@ -24,6 +24,28 @@ from django.utils import timezone
 import datetime 
 import calendar as cal
 
+from django.views.generic import DetailView, UpdateView
+from django.contrib.auth.models import User
+
+
+class UserDetailView(LoginRequiredMixin, View):
+    template_name = 'STP/user_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        user_profile = self.request.user
+        return render(request, self.template_name, {'user_profile': user_profile})
+
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    template_name = 'STP/user_edit.html'
+    fields = ['username', 'first_name', 'last_name', 'email']
+    success_url = reverse_lazy('user_detail')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
 # Create your views here.
 
 #login/register
@@ -200,6 +222,9 @@ class GetInfo(LoginRequiredMixin, ListView):
         context['num_task_for_day'] = num_task_for_day
 
         return context
+    
+
+
 
 
 from django.shortcuts import render
