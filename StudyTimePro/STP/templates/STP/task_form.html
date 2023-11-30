@@ -10,94 +10,98 @@
     {{form.as_p}}
     <input type = "submit" value="Submit">
 </form> --> 
-<!-- page content -->
-            <div class="right_col" role="main">
-                <div class="">
-                    <div class="page-title">
-                        <div class="title_left">
-                            <h3>Formulario de Tareas</h3>
-                        </div>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Formulario de Tareas</h3>
+            </div>
 
-                        <div class="title_right">
-                            <div class="col-md-5 col-sm-5  form-group pull-right top_search">
-                                <div >
-                                    
-                                    <span >
-                                       <a href="{% url 'tasks' %}"> <button class="btn btn-primary" type="button">Volver Lista de Tareas</button></a>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5  form-group pull-right top_search">
+                    <div>
+                        <span>
+                            <a href="{% url 'tasks' %}"><button class="btn btn-primary" type="button">Volver Lista de Tareas</button></a>
+                        </span>
                     </div>
-                    <div class="clearfix"></div>
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 ">
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <h2>Tarea<small>diligencie el formulario</small></h2>
-                                    
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="x_content">
-                                    <br />
-                                    <form method="post" action="" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
-                                        {% csrf_token %}
-                                        <!-- {{form.as_p}} -->
-
-                                        <div class="item form-group">
-                                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">{{form.title.label }} <span class="required">*</span>
-                                            </label>
-                                            {{form.title}}
-                                        </div>
-                                        <div class="item form-group">
-                                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">{{form.description.label }} <span class="required">*</span>
-                                            </label>
-                                            {{form.description}}
-                                        </div>
-                                        <div class="item form-group">
-                                            <label class="col-form-label col-md-3 col-sm-3 label-align">{{form.created.label }} <span class="required">*</span>
-                                            </label>
-                                            {{form.created}}
-                                        </div>
-                                        <div class="item form-group">
-                                            <label class="col-form-label col-md-3 col-sm-3 label-align">{{form.due_date.label }} <span class="required">*</span>
-                                            </label>
-                                            {{form.due_date}}
-                                        </div>
-                                        <div class="item form-group">
-                                            <label class="col-form-label col-md-3 col-sm-3 label-align">{{form.priority.label }} <span class="required">*</span>
-                                            </label>
-                                            {{form.priority}}
-                                        </div>
-                                        <div class="item form-group">
-                                            <label class="col-form-label col-md-3 col-sm-3 label-align">{{form.complete.label }} <span class="required">*</span>
-                                            </label>
-                                            {{form.complete}}
-                                        </div>
-                                        <div class="ln_solid"></div>
-                                        <div class="item form-group">
-                                            <div class="col-md-6 col-sm-6 offset-md-3">
-                                                <input  class="btn btn-success" type = "submit" value="Guardar">
-                                                <!-- <button type="submit" class="btn btn-success">Submit</button> -->
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                  
-
-                    
-
-                   
-
-
-                   
                 </div>
             </div>
-            <!-- /page content -->
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Tarea<small>diligencie el formulario</small></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form method="post" action="" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                            {% csrf_token %}
+
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">{{ form.title.label }} <span class="required">*</span>
+                                </label>
+                                {{ form.title }}
+                            </div>
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">{{ form.description.label }} <span class="required">*</span>
+                                </label>
+                                {{ form.description }}
+                            </div>
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">{{ form.created.label }} <span class="required">*</span>
+                                </label>
+                                <input type="text" class="form-control datepicker" name="{{ form.created.name }}" id="{{ form.created.id_for_label }}" value="{{ form.created.value }}">
+                            </div>
+                            
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">{{ form.due_date.label }} <span class="required">*</span></label>
+                                <input type="text" class="form-control datepicker" name="{{ form.due_date.name }}" id="{{ form.due_date.id_for_label }}" value="{{ form.due_date.value }}">
+                            </div>
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">{{ form.priority.label }} <span class="required">*</span>
+                                </label>
+                                {{ form.priority }}
+                            </div>
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align">{{ form.complete.label }} <span class="required">*</span>
+                                </label>
+                                {{ form.complete }}
+                            </div>
+                            <input type="hidden" id="id_due_date" name="due_date" value="">
+                            <div class="ln_solid"></div>
+                            <div class="item form-group">
+                                <div class="col-md-6 col-sm-6 offset-md-3">
+                                    <input class="btn btn-success" type="submit" value="Guardar">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add these lines to include jQuery and jQuery UI -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<!-- Add this script to initialize datepickers -->
+<!-- Asegúrate de tener las bibliotecas de jQuery y jQuery UI incluidas antes de este script -->
+<script>
+    $(document).ready(function () {
+      $(".datepicker").datepicker({
+        dateFormat: 'yy-mm-dd',  // Formato deseado para la fecha
+        changeMonth: true,
+        changeYear: true,
+      });
+    });
+  </script>
+  
+
+<!-- /page content -->
 {% endblock content %}

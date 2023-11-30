@@ -46,19 +46,40 @@
   <link href="{% static '/FrWork/admin_lte/vendors/cropper/dist/cropper.min.css' %}" rel="stylesheet">
  
 <!-- Calendario david -->
- <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/es.global.min.js'></script>
+
+
     <script>
 
       document.addEventListener('DOMContentLoaded', function() {
+        var dateInput = document.getElementById('id_due_date');
+        var datePicker = document.getElementById('datepicker');
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
+          dateClick: function(info) {
+          window.location.href = '{% url "task-create" %}';
+          document.getElementById('id_due_date').value = info.dateStr;
+          dateInput.value = datePicker.value;
+        },
+          headerToolbar: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+            },
+            
+          locale: "es",
           initialView: 'dayGridMonth',
           events: '{% url "get_tasks_as_json" %}',
+          dayMaxEvents: true,
         });
         calendar.render();
       });
 
     </script>
+  <!-- Calendario fin -->  
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   </head>
 
@@ -94,7 +115,7 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{% url 'index' %}"><i class="fa fa-user"></i> Perfil</a></li>
+                      <li><a href="{% url 'user_detail' %}"><i class="fa fa-user"></i> Perfil</a></li>
                       <li><a href="{% url 'estadisticas' %}"><i class="fa fa-bar-chart-o"></i> Estadisticas</a></li>
                       <li><a href="{% url 'ayuda' %}"><i class="fa fa-question-circle"></i> ¿Ayuda?</a></li>                     
                     </ul>
