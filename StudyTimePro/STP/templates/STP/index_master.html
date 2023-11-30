@@ -29,9 +29,8 @@
 
     <!-- Custom Theme Style -->
     <link href="{% static '/FrWork/admin_lte/build/css/custom.min.css' %}" rel="stylesheet">
-    <!-- FullCalendar -->
 
-<link href="{% static '/FrWork/admin_lte/vendors/normalize-css/normalize.css' %}" rel="stylesheet">
+  <link href="{% static '/FrWork/admin_lte/vendors/normalize-css/normalize.css' %}" rel="stylesheet">
   <link href="{% static '/FrWork/admin_lte/vendors/ion.rangeSlider/css/ion.rangeSlider.css' %}" rel="stylesheet">
   <link href="{% static '/FrWork/admin_lte/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css' %}" rel="stylesheet">
   <!-- Bootstrap Colorpicker -->
@@ -45,7 +44,7 @@
   <!-- starrr -->
   <link href="{% static '/FrWork/admin_lte/vendors/cropper/dist/cropper.min.css' %}" rel="stylesheet">
  
-<!-- Calendario david -->
+<!-- Calendario-->
 
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/es.global.min.js'></script>
@@ -156,9 +155,9 @@
                     <img src="/static/FrWork/admin_lte/build/images/img.jpg" alt="">{{ request.user }}
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="index"><i class="fa fa-user pull-right"></i> Perfil</a>                      
-                  <a class="dropdown-item"  href="ayuda"><i class="fa fa-question-circle pull-right"></i> Ayuda</a>
-                    <a class="dropdown-item"  href="logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                    <a class="dropdown-item"  href="{% url 'user_detail' %}"><i class="fa fa-user pull-right"></i> Perfil</a>                      
+                  <a class="dropdown-item"  href="{% url 'ayuda' %}"><i class="fa fa-question-circle pull-right"></i> Ayuda</a>
+                    <a class="dropdown-item"  href="{% url 'logout' %}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                   </div>
                 </li>
 
