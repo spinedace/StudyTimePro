@@ -28,23 +28,6 @@ from django.views.generic import DetailView, UpdateView
 from django.contrib.auth.models import User
 
 
-class UserDetailView(LoginRequiredMixin, View):
-    template_name = 'STP/user_detail.html'
-
-    def get(self, request, *args, **kwargs):
-        user_profile = self.request.user
-        return render(request, self.template_name, {'user_profile': user_profile})
-
-
-
-class UserUpdateView(LoginRequiredMixin, UpdateView):
-    model = User
-    template_name = 'STP/user_edit.html'
-    fields = ['username', 'first_name', 'last_name', 'email']
-    success_url = reverse_lazy('user_detail')
-
-    def get_object(self, queryset=None):
-        return self.request.user
 
 # Create your views here.
 
@@ -114,10 +97,12 @@ class TaskDetail(LoginRequiredMixin, DetailView):
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
     fields = ['title','description','created','due_date','priority','complete']
+    
     success_url = reverse_lazy('tasks')
 
-    def form_valid(self,form):
+    def form_valid(self, form):
         form.instance.user = self.request.user
+        form.instance.due_date = self.request.POST.get('due_date')  # Recupera el valor del campo oculto
         return super(TaskCreate, self).form_valid(form)
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
@@ -175,6 +160,24 @@ class CalendarView(LoginRequiredMixin, View):
         # Puedes agregar datos adicionales al contexto según sea necesario
         return context
 
+#perfil
+class UserDetailView(LoginRequiredMixin, View):
+    template_name = 'STP/user_detail.html'
+
+    def get(self, request, *args, **kwargs):
+        user_profile = self.request.user
+        return render(request, self.template_name, {'user_profile': user_profile})
+
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    template_name = 'STP/user_edit.html'
+    fields = ['username', 'first_name', 'last_name', 'email']
+    success_url = reverse_lazy('user_detail')
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 #Estadísticas
 
@@ -236,8 +239,11 @@ TEMPLATES_DIRS = (
     'os.path.join(BASE_DIR,"templates")'
 )
 
-def index(request):
+def home(request):
     return render(request, "STP/index.html")
+
+def perfil(request):
+    return render(request, "STP/perfil.html")
 
 def calendar(request):
     return render(request, "STP/calendar.html")
