@@ -211,8 +211,11 @@ TEMPLATES_DIRS = (
     'os.path.join(BASE_DIR,"templates")'
 )
 
-def index(request):
+def home(request):
     return render(request, "STP/index.html")
+
+def perfil(request):
+    return render(request, "STP/perfil.html")
 
 def calendar(request):
     return render(request, "STP/calendar.html")

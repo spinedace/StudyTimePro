@@ -14,7 +14,7 @@ urlpatterns =[
     path('logout/',LogoutView.as_view(next_page='login'), name='logout'),
     path('register/',RegisterPage.as_view(), name='register'),
 
-    path('', TaskList.as_view(), name='tasks'),
+    path('tasks', TaskList.as_view(), name='tasks'),
     path('task/<int:pk>/',TaskDetail.as_view(), name='task'),
     path('task-create/',TaskCreate.as_view(), name='task-create'),
     path('task-update/<int:pk>/',TaskUpdate.as_view(), name='task-update'),
@@ -31,8 +31,8 @@ urlpatterns =[
     
 
     # Rutas auxiliares
-    path('', views.index, name="index"),
-    path('index', views.index, name="index"),
+    path('', views.home, name="home"),
+    path('perfil', views.perfil, name="perfil"),
     path('calendar', views.calendar, name="calendar"),
     path('estadisticas', GetInfo.as_view(), name="estadisticas"),
     path('ayuda', views.ayuda, name="ayuda"),
