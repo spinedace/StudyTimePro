@@ -5,7 +5,6 @@ from django.contrib.auth.views import LogoutView
 from .views import CalendarView
 
 from .views import UserDetailView, UserUpdateView
-from .views import SelectedDateView
 
 from django import views
 from . import views
