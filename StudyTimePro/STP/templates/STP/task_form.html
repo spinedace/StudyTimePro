@@ -11,6 +11,11 @@
     <input type = "submit" value="Submit">
 </form> --> 
 <!-- page content -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+
+
             <div class="right_col" role="main">
                 <div class="">
                     <div class="page-title">
@@ -55,16 +60,56 @@
                                             </label>
                                             {{form.description}}
                                         </div>
+
+                                        <style>
+                                            /* Estilo para reducir el tamaño del campo flatpickr */
+                                            .flatpickr {
+                                                width: 150px; /* Puedes ajustar el ancho según tus necesidades */
+                                                height: 30px; /* Puedes ajustar la altura según tus necesidades */
+                                            }
+                                        </style>
+
                                         <div class="item form-group">
-                                            <label class="col-form-label col-md-3 col-sm-3 label-align">{{form.created.label }} <span class="required">*</span>
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                                {{ form.created.label }} <span class="required">*</span>
                                             </label>
-                                            {{form.created}}
+                                            
+                                            <!-- Utiliza la clase 'flatpickr' para seleccionar el input -->
+                                            {{ form.created }}
                                         </div>
+
                                         <div class="item form-group">
-                                            <label class="col-form-label col-md-3 col-sm-3 label-align">{{form.due_date.label }} <span class="required">*</span>
+                                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                                {{form.due_date.label }}<span class="required">*</span>
                                             </label>
-                                            {{form.due_date}}
+
+                                            <!-- Añade una clase común 'flatpickr' al input para seleccionarlo fácilmente con flatpickr -->
+                                            {{ form.due_date }}
                                         </div>
+
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                flatpickr('.flatpickr', {
+                                                    
+                                                    dateFormat: 'Y-m-d',
+                                                    locale: 'es',
+                                                    defaultDate: function (field) {
+                                                        // Identifica cada campo por su nombre (name)
+                                                        if (field.name === 'created') {
+                                                            return '{{ form.instance.created|date:"Y-m-d" }}';
+                                                        } else if (field.name === 'due_date') {
+                                                            return '{{ form.instance.due_date|date:"Y-m-d" }}';
+                                                        }
+                                                        return null;
+                                                    }
+                                                });
+                                            });
+                                        </script>
+
+
+                                        
+
+                        
                                         <div class="item form-group">
                                             <label class="col-form-label col-md-3 col-sm-3 label-align">{{form.priority.label }} <span class="required">*</span>
                                             </label>
@@ -75,6 +120,7 @@
                                             </label>
                                             {{form.complete}}
                                         </div>
+
                                         <div class="ln_solid"></div>
                                         <div class="item form-group">
                                             <div class="col-md-6 col-sm-6 offset-md-3">

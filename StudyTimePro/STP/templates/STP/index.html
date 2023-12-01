@@ -1,186 +1,97 @@
-{% extends 'STP/index_master.html' %}
-
-{% block content %}
-
-    <!-- page content -->
-        <div class="right_col" role="main">
-          <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>Perfil del Usuario</h3>
-              </div>
-
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5  form-group pull-right top_search">
-                  
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>StudyTimePro !</title>
+        <!-- Favicon-->
+        <link rel="icon" href="/static/FrWork/admin_lte/build/images/favicon.ico" type="image/ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="/static/FrWork/admin_lte/build/css/custom_index.css" rel="stylesheet">
+        
+    </head>
+    <body class="d-flex flex-column h-100">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container px-5">
+                    <a class="navbar-brand" href="{% url 'tasks' %}"><img src="/static/FrWork/admin_lte/build/images/favicon.png" width="30" height="30" > StudyTimePro ! </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Ingresar</a></li>
+                            <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Registrarce</a></li>
+                            
+                        </ul>
+                    </div>
                 </div>
-              </div>
-            </div>
-            
-            <div class="clearfix"></div>
-
-            <div class="row">
-              <div class="col-md-12 col-sm-12 ">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Reporte de Usuarios <small>Actividades</small></h2>
-                    
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                    <div class="col-md-3 col-sm-3  profile_left">
-                      <div class="profile_img">
-                        <div id="crop-avatar">
-                          <!-- Current avatar -->
-                          <img class="img-responsive avatar-view" src="static/FrWork/admin_lte/build/images/picture.jpg" alt="Avatar" title="Change the avatar">
+            </nav>
+            <!-- Header-->
+            <header class="bg-dark py-5">
+                <div class="container px-5">
+                    <div class="row gx-0 align-items-center justify-content-center">
+                        <div class="col-lg-8 col-xl-7 col-xxl-6">
+                            <div class="my-5 text-center text-xl-start">
+                                <h1 class="display-5 fw-bolder text-white mb-2">Con StudyTimePro ahora puedes organizar tu tiempo</h1>
+                                <p class="lead fw-normal text-white-50 mb-4">Crea y edita tus tareas, visualizandolas en el entorno ideal</p>
+                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                                    <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{% url 'register' %}">Inicia ahora!</a>
+                                    <a class="btn btn-outline-light btn-lg px-4" href="{% url 'login' %}">Ver mis tareas</a>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <h3>{{ request.user }}</h3>
-
-                      <ul class="list-unstyled user_data">
-                        <li><i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California, USA
-                        </li>
-
-                        <li>
-                          <i class="fa fa-briefcase user-profile-icon"></i> Software Engineer
-                        </li>
-
-                        <li class="m-top-xs">
-                          <i class="fa fa-external-link user-profile-icon"></i>
-                          <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
-                        </li>
-                      </ul>
-
-                      <a>
-                      <button type="submit" class="btn btn-primary"><i class="fa fa-edit m-right-xs"></i>  Editar Foto de Perfil</button></a>
-
-
-                      <br />
-                      <br />
-
-                      <!-- start skills -->
-                      <h4>Habilidades</h4>
-                      <br />
-                      <br />
-                      <ul class="list-unstyled user_data">
-                        <li>
-                          <p>Web Applications</p>
-                          <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                          </div>
-                        </li>
-                        <li>
-                          <p>Website Design</p>
-                          <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70"></div>
-                          </div>
-                        </li>
-                        <li>
-                          <p>Automation & Testing</p>
-                          <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="30"></div>
-                          </div>
-                        </li>
-                        <li>
-                          <p>UI / UX</p>
-                          <div class="progress progress_sm">
-                            <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                          </div>
-                        </li>
-                      </ul>
-                      <!-- end of skills -->
-
+                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img src="/static/FrWork/admin_lte/build/images/estadisticasSTP.png" width = "480"></div>
                     </div>
-                    <div class="col-md-9 col-sm-9 ">
-                      <div class="row">
-            <div class="col-md-12 col-sm-12 ">
-              <div class="x_panel">
-                <div class="x_title">
-                  <h2>Datos <small>Basicos</small></h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>                    
-                  </ul>
-                  <div class="clearfix"></div>
                 </div>
-                <div class="x_content">
-                  <br />
-                  <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
-                    <div class="item form-group">
-                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Nombres <span class="required">*</span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 ">
-                        <input type="text" id="first-name" required="required" class="form-control ">
-                      </div>
-                    </div>
-                    <div class="item form-group">
-                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Apellidos <span class="required">*</span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 ">
-                        <input type="text" id="last-name" name="last-name" required="required" class="form-control">
-                      </div>
-                    </div>
-                    <div class="item form-group">
-                      <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">otro <span class="required">*</span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 ">
-                        <input type="text" id="last-name" name="last-name" required="required" class="form-control">
-                      </div>
-                    </div>
-                    
-                    <div class="item form-group">
-                      <label class="col-form-label col-md-3 col-sm-3 label-align">Genero</label>
-                      <div class="col-md-6 col-sm-6 ">
-                        <div id="gender" class="btn-group" data-toggle="buttons">
-                          <label class="btn btn-secondary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                            <input type="radio" name="gender" value="male" class="join-btn"> &nbsp; Masculino &nbsp;
-                          </label>
-                          <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                            <input type="radio" name="gender" value="female" class="join-btn"> Femenino
-                          </label>
+            </header>
+            <!-- Features section-->
+            <section class="py-5" id="features">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5">
+                        <div class="col-lg-4 mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">Conoce sus funcionalidades</h2></div>
+                        <div class="col-lg-8">
+                            <div class="row gx-5 row-cols-1 row-cols-md-2">
+                                <div class="col mb-5 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
+                                    <h2 class="h5">Crea tareas</h2>
+                                    <p class="mb-0">Puedes agregar una descripción, un intervalo de tiempo y prioridad.</p>
+                                </div>
+                                <div class="col mb-5 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi-bar-chart"></i></div>
+                                    <h2 class="h5">Visualiza tus estadísticas</h2>
+                                    <p class="mb-0">Puedes ver tus logros del mes que desees, además del histórico general.</p>
+                                </div>
+                                <div class="col mb-5 mb-md-0 h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi-calendar"></i></div>
+                                    <h2 class="h5">Calendario</h2>
+                                    <p class="mb-0">Ubícate temporalmente y visualiza tus quehaceres.</p>
+                                </div>
+                                <div class="col h-100">
+                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi-pencil"></i></div>
+                                    <h2 class="h5">Edita tus tareas</h2>
+                                    <p class="mb-0">Puedes reconstruir tus tareas o marcalas como completadas.</p>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                    <div class="item form-group">
-                      <label class="col-form-label col-md-3 col-sm-3 label-align">Fecha de Nacimiento<span class="required">*</span>
-                      </label>
-                      <div class="col-md-6 col-sm-6 ">
-                        <input id="birthday" class="date-picker form-control" placeholder="dd-mm-yyyy" type="text" required="required" type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
-                        <script>
-                          function timeFunctionLong(input) {
-                            setTimeout(function() {
-                              input.type = 'text';
-                            }, 60000);
-                          }
-                        </script>
-                      </div>
-                    </div>
-                    <div class="ln_solid"></div>
-                    <div class="item form-group">
-                      <div class="col-md-6 col-sm-6 offset-md-3">
-                        <!-- <button class="btn btn-primary" type="button">Cancel</button>
-                        <button class="btn btn-primary" type="reset">Reset</button> -->
-                        <button type="submit" class="btn btn-success">Actualizar</button>
-                      </div>
-                    </div>
-
-                  </form>
                 </div>
-              </div>
-            </div>
-          </div>
-
-                      
-                      
-
-                     
-                    </div>
-                  </div>
+            </section>
+        </main>
+        <!-- Footer-->
+        <footer class="bg-dark py-4 mt-auto">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; StudyTimePro</div></div> 
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-        <!-- /page content -->
-{% endblock %}
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="/static/FrWork/admin_lte/build/js/scripts_index.js"></script>
+    </body>
+</html>

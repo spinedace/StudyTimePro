@@ -10,6 +10,13 @@
 	<link rel="icon" href="/static/FrWork/admin_lte/build/images/favicon.ico" type="image/ico" />
 
     <title>StudyTimePro | </title>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
 
     <!-- Bootstrap -->
     <link href="{% static '/FrWork/admin_lte/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -29,9 +36,8 @@
 
     <!-- Custom Theme Style -->
     <link href="{% static '/FrWork/admin_lte/build/css/custom.min.css' %}" rel="stylesheet">
-    <!-- FullCalendar -->
 
-<link href="{% static '/FrWork/admin_lte/vendors/normalize-css/normalize.css' %}" rel="stylesheet">
+  <link href="{% static '/FrWork/admin_lte/vendors/normalize-css/normalize.css' %}" rel="stylesheet">
   <link href="{% static '/FrWork/admin_lte/vendors/ion.rangeSlider/css/ion.rangeSlider.css' %}" rel="stylesheet">
   <link href="{% static '/FrWork/admin_lte/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css' %}" rel="stylesheet">
   <!-- Bootstrap Colorpicker -->
@@ -45,20 +51,37 @@
   <!-- starrr -->
   <link href="{% static '/FrWork/admin_lte/vendors/cropper/dist/cropper.min.css' %}" rel="stylesheet">
  
-<!-- Calendario david -->
- <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+<!-- Calendario-->
+
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+
     <script>
 
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
+          dateClick: function(info) {
+          window.location.href = '{% url "task-create" %}';
+          dateInput.value = datePicker.value;
+        },
+          headerToolbar: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+            },
+            
+          locale: "es",
           initialView: 'dayGridMonth',
           events: '{% url "get_tasks_as_json" %}',
+          dayMaxEvents: true,
         });
         calendar.render();
       });
 
     </script>
+  <!-- Calendario fin -->  
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   </head>
 
   <body class="nav-md">
@@ -93,7 +116,7 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{% url 'index' %}"><i class="fa fa-user"></i> Perfil</a></li>
+                      <li><a href="{% url 'user_detail' %}"><i class="fa fa-user"></i> Perfil</a></li>
                       <li><a href="{% url 'estadisticas' %}"><i class="fa fa-bar-chart-o"></i> Estadisticas</a></li>
                       <li><a href="{% url 'ayuda' %}"><i class="fa fa-question-circle"></i> ¿Ayuda?</a></li>                     
                     </ul>
@@ -134,9 +157,9 @@
                     <img src="/static/FrWork/admin_lte/build/images/img.jpg" alt="">{{ request.user }}
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="index"><i class="fa fa-user pull-right"></i> Perfil</a>                      
-                  <a class="dropdown-item"  href="ayuda"><i class="fa fa-question-circle pull-right"></i> Ayuda</a>
-                    <a class="dropdown-item"  href="logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                    <a class="dropdown-item"  href="{% url 'user_detail' %}"><i class="fa fa-user pull-right"></i> Perfil</a>                      
+                  <a class="dropdown-item"  href="{% url 'ayuda' %}"><i class="fa fa-question-circle pull-right"></i> Ayuda</a>
+                    <a class="dropdown-item"  href="{% url 'logout' %}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
                   </div>
                 </li>
 
@@ -155,14 +178,7 @@
         {% endblock %}
 
 
-        <!-- footer content -->
-        <footer>
-          <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-          </div>
-          <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
+ 
       </div>
     </div>
 

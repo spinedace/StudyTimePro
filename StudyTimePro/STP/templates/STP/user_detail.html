@@ -1,0 +1,59 @@
+{% extends 'STP/index_master.html' %}
+
+{% block content %}
+
+    <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              
+                <h3>Perfil del Usuario</h3>
+
+
+
+
+<div class="x_panel">
+<div class="x_title">
+<h2>Datos de Usuario<small>Aquí podras encontrar tus datos básicos</small></h2>
+
+<div class="clearfix"></div>
+</div>
+<div class="x_content">
+<br>
+<form method="post" action="" class="form-label-left input_mask">
+<div class="col-md-6 col-sm-6  form-group has-feedback">
+<input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="Username: {{ user_profile.username }}">
+<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+</div>
+<div class="col-md-6 col-sm-6  form-group has-feedback">
+<input type="text" class="form-control" id="inputSuccess3" placeholder="Nombres: {{ user_profile.first_name }}">
+<span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+</div>
+<div class="col-md-6 col-sm-6  form-group has-feedback">
+<input type="email" class="form-control has-feedback-left" id="inputSuccess4" placeholder="Apellidos: {{ user_profile.last_name }}">
+<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+</div>
+<div class="col-md-6 col-sm-6  form-group has-feedback">
+<input type="tel" class="form-control" id="inputSuccess5" placeholder="Email: {{ user_profile.email }}">
+<span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
+</div>
+
+
+
+
+
+<div class="ln_solid"></div>
+<div class="form-group row">
+<div class="col-md-12 col-sm-9  offset-md-3">
+
+<a href="{% url 'user_edit' %}" class="btn btn-primary btn-xs"> 
+                  <i class="fa fa-tasks"></i> Editar Perfil
+               </a>
+</div>
+</div>
+</form>
+</div>
+</div>
+
+
+{% endblock %}

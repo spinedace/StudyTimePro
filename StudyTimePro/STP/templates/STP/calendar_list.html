@@ -8,6 +8,16 @@
     <div class="right_col" role="main">
       <div class="x_panel">
         <div class="x_content">
+          <div class="x_title">
+            <h2>Listado de Tareas<small>Verifica y gestiona todas tus actividades, crea una nueva tarea con el siguiente botón:</small></h2>
+            
+            <div class="clearfix">
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+               <a href="{% url 'task-create' %}" class="btn btn-primary btn-xs"> 
+                  <i class="fa fa-tasks"></i> Crear Nueva Tarea
+               </a>
+            </div>
+          </div>
           <div id='calendar'></div>
         </div>
       </div>

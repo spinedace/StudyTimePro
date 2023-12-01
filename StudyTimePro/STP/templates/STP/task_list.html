@@ -53,116 +53,267 @@
 
 
 <!-- page content -->
-        <div class="right_col" role="main">
-          <div class="">            
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<!-- page content -->
+<div class="right_col" role="main">
+  <div class="">            
+    <div class="clearfix"></div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Listado de Tareas<small>Verifica y gestiona todas tus actividades, crea una nueva tarea con el siguiente botón:</small></h2>
             
-            <div class="clearfix"></div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Lista de Tareas</h2>
-
-                   
-                    <div class="clearfix">
-                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="{% url 'task-create' %}" class="btn btn-primary btn-xs"> <i class="fa fa-tasks"></i> Crear Nueva Tarea</a>
-                    </div>
-                  </div>
-                  <div class="x_content">
-
-                    <h2>Tareas pendientes: {{ count }}</h2>
-
-                    <!-- start project list -->
-                    <table class="table table-striped projects">
-                      <thead>
-                        <tr>
-                          <th style="width: 1%">#</th>
-                          <th style="width: 20%">Titulo</th>
-                          <th style="width: 30%">Descripciónn</th>
-                          <th style="width: 10%">Prioridad</th>
-                          <th style="width: 5%">Completado</th>
-                          <th style="width: 25%">#Edit</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for task in tasks %}
-                            <tr>
-                              <td>#</td>
-                              <td><a>{{ task.title }}</a>
-                                <!-- <br />
-                                <small>Created 01.01.2015</small> -->
-                              </td>
-                              <td>
-                               <a>{{ task.description }}</a>
-                              </td>
-                              <td>
-                               <a>{% if task.priority == 'choice1' %}
-                Baja
-            {% elif task.priority == 'choice2' %}
-                Media
-            {% elif task.priority == 'choice3' %}
-                Alta
-            {% else %}
-                Sin prioridad
-            {% endif %}</a>
-                              </td>
-
-                              <td>
-                               <form method="post" action="{% url 'task-toggle-complete' task.id %}">
-            {% csrf_token %}
-            <label for="task_{{ task.id }}" ></label>
-            <input type="checkbox" id="task_{{ task.id }}" name="complete" {% if task.complete %}checked{% endif %}>
-            <input type="hidden" name="task_id" value="{{ task.id }}">
-        </form>
-                              </td>                         
-                              <td>
-                                <!-- <a href="{% url 'task' task.id %}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver </a> -->
-                                <a href="{% url 'task-update' task.id %}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
-                                <a href="{% url 'task-delete' task.id %}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Borrar </a>
-                              </td>
-                            </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                    <!-- end project list -->
-
-                  </div>
-                </div>
-              </div>
+            <div class="clearfix">
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+               <a href="{% url 'task-create' %}" class="btn btn-primary btn-xs"> 
+                  <i class="fa fa-tasks"></i> Crear Nueva Tarea
+               </a>
             </div>
           </div>
+          <div class="x_content">
+
+            <!-- Tareas Actuales -->
+
+            <h2 class="table-header">
+              <i class="fas toggle-icon fa-chevron-down"></i>
+              Tareas Actuales: {{ count_current }}</h2>
+            <table class="table table-striped projects task-table">
+              <thead>
+                <tr>
+                  <th style="width: 1%">#</th>
+                  <th style="width: 20%">Titulo</th>
+                  <th style="width: 30%">Descripción</th>
+                  <th style="width: 10%">Prioridad</th>
+                  <th style="width: 5%">Completado</th>
+                  <th style="width: 25%">Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in tasks_current %}
+                <tr>
+                  <td>#</td>
+                  <td><a>{{ task.title }}</a>
+                    <!-- <br />
+                    <small>Created 01.01.2015</small> -->
+                  </td>
+                  <td>
+                   <a>{{ task.description }}</a>
+                  </td>
+                  <td>
+                   <a>{% if task.priority == 'choice1' %}
+    Baja
+{% elif task.priority == 'choice2' %}
+    Media
+{% elif task.priority == 'choice3' %}
+    Alta
+{% else %}
+    Sin prioridad
+{% endif %}</a>
+                  </td>
+
+                  <td>
+                   <form method="post" action="{% url 'task-toggle-complete' task.id %}">
+{% csrf_token %}
+<label for="task_{{ task.id }}" ></label>
+<input type="checkbox" id="task_{{ task.id }}" name="complete" {% if task.complete %}checked{% endif %}>
+<input type="hidden" name="task_id" value="{{ task.id }}">
+</form>
+                  </td>                         
+                  <td>
+                    <!-- <a href="{% url 'task' task.id %}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver </a> -->
+                    <a href="{% url 'task-update' task.id %}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+                    <a href="{% url 'task-delete' task.id %}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Borrar </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+            <!-- Tareas Vencidas -->
+            <h2 class="table-header">
+              <i class="fas toggle-icon fa-chevron-down"></i>
+              Tareas Vencidas: {{ count_overdue }}</h2>
+            <table class="table table-striped projects task-table">
+              <thead>
+                <tr>
+                  <th style="width: 1%">#</th>
+                  <th style="width: 20%">Titulo</th>
+                  <th style="width: 30%">Descripción</th>
+                  <th style="width: 10%">Prioridad</th>
+                  <th style="width: 5%">Completado</th>
+                  <th style="width: 25%">Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in tasks_overdue %}
+                <tr>
+                  <td>#</td>
+                  <td><a>{{ task.title }}</a>
+                    <!-- <br />
+                    <small>Created 01.01.2015</small> -->
+                  </td>
+                  <td>
+                   <a>{{ task.description }}</a>
+                  </td>
+                  <td>
+                   <a>{% if task.priority == 'choice1' %}
+    Baja
+{% elif task.priority == 'choice2' %}
+    Media
+{% elif task.priority == 'choice3' %}
+    Alta
+{% else %}
+    Sin prioridad
+{% endif %}</a>
+                  </td>
+
+                  <td>
+                   <form method="post" action="{% url 'task-toggle-complete' task.id %}">
+{% csrf_token %}
+<label for="task_{{ task.id }}" ></label>
+<input type="checkbox" id="task_{{ task.id }}" name="complete" {% if task.complete %}checked{% endif %}>
+<input type="hidden" name="task_id" value="{{ task.id }}">
+</form>
+                  </td>                         
+                  <td>
+                    <!-- <a href="{% url 'task' task.id %}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver </a> -->
+                    <a href="{% url 'task-update' task.id %}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+                    <a href="{% url 'task-delete' task.id %}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Borrar </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+            <!-- Tareas Completadas -->
+            <h2 class="table-header">
+              <i class="fas toggle-icon fa-chevron-down"></i>
+              Tareas Completadas: {{ count_completed }}</h2>
+            <table class="table table-striped projects task-table">
+              <thead>
+                <tr>
+                  <th style="width: 1%">#</th>
+                  <th style="width: 20%">Titulo</th>
+                  <th style="width: 30%">Descripción</th>
+                  <th style="width: 10%">Prioridad</th>
+                  <th style="width: 5%">Completado</th>
+                  <th style="width: 25%">Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in tasks_completed %}
+                <tr>
+                  <td>#</td>
+                  <td><a>{{ task.title }}</a>
+                    <!-- <br />
+                    <small>Created 01.01.2015</small> -->
+                  </td>
+                  <td>
+                   <a>{{ task.description }}</a>
+                  </td>
+                  <td>
+                   <a>{% if task.priority == 'choice1' %}
+    Baja
+{% elif task.priority == 'choice2' %}
+    Media
+{% elif task.priority == 'choice3' %}
+    Alta
+{% else %}
+    Sin prioridad
+{% endif %}</a>
+                  </td>
+
+                  <td>
+                   <form method="post" action="{% url 'task-toggle-complete' task.id %}">
+{% csrf_token %}
+<label for="task_{{ task.id }}" ></label>
+<input type="checkbox" id="task_{{ task.id }}" name="complete" {% if task.complete %}checked{% endif %}>
+<input type="hidden" name="task_id" value="{{ task.id }}">
+</form>
+                  </td>                         
+                  <td>
+                    <!-- <a href="{% url 'task' task.id %}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> Ver </a> -->
+                    <a href="{% url 'task-update' task.id %}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Editar </a>
+                    <a href="{% url 'task-delete' task.id %}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Borrar </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
         </div>
-        <script>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    // Oculta todas las tablas al cargar la página
+    $('.task-table').hide();
+
+    // Agrega un controlador de eventos al encabezado para mostrar/ocultar las tablas al hacer clic
+    $('.table-header').click(function () {
+      const table = $(this).next('.task-table');
+      table.slideToggle();
+
+      // Cambia dinámicamente el ícono chevron-down / chevron-up
+      const icon = $(this).find('.toggle-icon');
+      icon.toggleClass('fa-chevron-down fa-chevron-up');
+    });
+
     // Obtén todas las casillas de verificación en el documento
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
     // Agrega un controlador de eventos a cada casilla de verificación
     checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener('change', function() {
-            const form = this.closest('form');
-            // Envía una solicitud POST al servidor
-            fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form),
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken') // Obtiene el token CSRF de las cookies
-                }
-            })
-            .then(() => {
-                // Recarga la página después de que se complete la solicitud
-                location.reload();
-            });
+      checkbox.addEventListener('change', function() {
+        const form = this.closest('form');
+        // Envía una solicitud POST al servidor
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            'X-CSRFToken': getCookie('csrftoken') // Obtiene el token CSRF de las cookies
+          }
+        })
+        .then(() => {
+          // Recarga la página después de que se complete la solicitud
+          location.reload();
         });
+      });
     });
+
+    // Muestra una notificación si hay tareas vencidas
+    const countOverdue = {{ count_overdue }};
+    if (countOverdue > 0) {
+      Swal.fire({
+        title: 'Tienes tareas vencidas',
+        text: `Hay ${countOverdue} tareas vencidas en tu lista.`,
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      });
+    }
 
     // Función para obtener el token CSRF de las cookies
     function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
     }
+  });
 </script>
-        <!-- /page content -->
+
+
 {% endblock content %}
 

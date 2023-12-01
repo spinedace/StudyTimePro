@@ -1,0 +1,45 @@
+{% extends 'STP/index_master.html' %}
+
+{% block content %}
+
+    <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+                <h3>Editar Datos de Usuario </h3>
+
+<div class="x_panel">
+<div class="x_title">
+<h2>Edita tus datos<small>Aqui podras editar tus datos basicos</small></h2>
+
+<div class="clearfix"></div>
+</div>
+<div class="x_content">
+<br>
+<form method="post" action="" class="form-label-left input_mask">
+  {% csrf_token %}
+    {{ form.as_p }}
+
+
+
+
+
+
+
+
+<div class="ln_solid"></div>
+<div class="form-group row">
+<div class="col-md-12 col-sm-9  offset-md-3">
+
+<button class="btn btn-primary" type="submit">Guardar</button>
+<button class="btn btn-success"><a href="{% url 'user_detail' %}">Cancelar</a></button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}
