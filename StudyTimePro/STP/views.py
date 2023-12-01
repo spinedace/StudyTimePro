@@ -26,7 +26,7 @@ import calendar as cal
 
 from django.views.generic import DetailView, UpdateView
 from django.contrib.auth.models import User
-
+from django import forms
 
 
 # Create your views here.
@@ -96,8 +96,7 @@ class TaskDetail(LoginRequiredMixin, DetailView):
 
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
-    fields = ['title','description','created','due_date','priority','complete']
-    
+    fields = ['title', 'description', 'created', 'due_date', 'priority', 'complete']
     success_url = reverse_lazy('tasks')
 
     def form_valid(self, form):
@@ -105,11 +104,22 @@ class TaskCreate(LoginRequiredMixin, CreateView):
         form.instance.due_date = self.request.POST.get('due_date')  # Recupera el valor del campo oculto
         return super(TaskCreate, self).form_valid(form)
 
+    def get_form(self, form_class=None):
+        form = super(TaskCreate, self).get_form(form_class)
+        form.fields['created'].widget = forms.DateTimeInput(attrs={'class': 'form-control flatpickr'})
+        form.fields['due_date'].widget = forms.DateTimeInput(attrs={'class': 'form-control flatpickr'})
+        return form
+
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
-    fields = ['title','description','created','due_date','priority','complete']
+    fields = ['title', 'description', 'created', 'due_date', 'priority', 'complete']
     success_url = reverse_lazy('tasks')
 
+    def get_form(self, form_class=None):
+        form = super(TaskUpdate, self).get_form(form_class)
+        form.fields['created'].widget = forms.DateTimeInput(attrs={'class': 'form-control flatpickr'})
+        form.fields['due_date'].widget = forms.DateTimeInput(attrs={'class': 'form-control flatpickr'})
+        return form
 class TaskToggleCompleteView(View):
     def post(self, request, task_id):
         # Obtén la tarea
@@ -225,10 +235,6 @@ class GetInfo(LoginRequiredMixin, ListView):
         context['num_task_for_day'] = num_task_for_day
 
         return context
-    
-
-
-
 
 from django.shortcuts import render
 from django.http import HttpResponse

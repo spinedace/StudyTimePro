@@ -10,6 +10,13 @@
 	<link rel="icon" href="/static/FrWork/admin_lte/build/images/favicon.ico" type="image/ico" />
 
     <title>StudyTimePro | </title>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+
 
     <!-- Bootstrap -->
     <link href="{% static '/FrWork/admin_lte/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -48,19 +55,14 @@
 <!-- Calendario david -->
 
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/es.global.min.js'></script>
-
 
     <script>
 
       document.addEventListener('DOMContentLoaded', function() {
-        var dateInput = document.getElementById('id_due_date');
-        var datePicker = document.getElementById('datepicker');
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           dateClick: function(info) {
           window.location.href = '{% url "task-create" %}';
-          document.getElementById('id_due_date').value = info.dateStr;
           dateInput.value = datePicker.value;
         },
           headerToolbar: {

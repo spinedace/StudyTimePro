@@ -5,7 +5,7 @@ from django.contrib.auth.views import LogoutView
 from .views import CalendarView
 
 from .views import UserDetailView, UserUpdateView
-
+from .views import SelectedDateView
 
 from django import views
 from . import views
@@ -34,7 +34,7 @@ urlpatterns =[
 
     path('calendar/', CalendarView.as_view(), name='calendar'),
     path('api/tasks/', GetTasksAsJSON.as_view(), name='get_tasks_as_json'),
-    
+
 
     # Rutas auxiliares
     path('', views.home, name="home"),
