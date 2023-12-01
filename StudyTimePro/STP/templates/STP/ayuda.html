@@ -1,29 +1,179 @@
 {% extends 'STP/index_master.html' %}
 
 {% block content %}
-
     <!-- page content -->
-        <div class="right_col" role="main">
-          <div class="col-md-12 col-sm-6  ">
-              <div class="x_panel">
+    <div class="right_col" role="main" style="min-height: 1115.83px; overflow-y: auto; <<<<<<<<<d">
+        <div class="col-md-12 col-sm-6">
+            <div class="x_panel">
                 <div class="x_title">
-                  <h2>AYUDA<small>Canales de ayuda</small></h2>
-                  
-                  <div class="clearfix"></div>
+                    <h2>AYUDA</h2>
+                    <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
+                    <div id="faq-section" class="container mt-5">
+                        <h2 class="text-center mb-4">Preguntas Frecuentes</h2>
 
-                  <div class="bs-example" data-example-id="simple-jumbotron">
-                    <div class="jumbotron">
-                      <h1>¿En que podemos ayudarte?</h1>
-                      <p>visita todos nuestros canales de ayuda</p>
-                      <iframe width="560" height="315" src="https://www.youtube.com/embed/kkFZbpZH5a0?si=H5jNUR1wTTt8wjAS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                    </div>
-                  </div>
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleAnswer(1)">¿Cómo creo una tarea?</button>
+                            <div id="faq-answer-1" class="faq-answer">
+                                <div id = "faq-steps-1" class="faq-steps">
+                                    <ol>
+                                        <li>Puedes crear las tareas desde la sección "Lista de tareas" en el menú a tu izquierda.</li>
+                                        <li>Allí seleccionas el botón azul en la parte superior derecha llamado "Crear nueva tarea".</li>
+                                        <li>Te dirigirá a un formulario donde podrás dar detalles sobre la tarea, su descripción, su fecha límite, y su prioridad.</li>
+                                        <li>Dale al boton de "Guardar" y verás como la nueva tarea estará ahora en una lista junto a las demás que hayas creado. Tambien la puedes ver en el calendario</li>
+                                    </ol>
+                                </div>
+                                <div class="center-content">
+                                    <p>Aquí tienes un pequeño video de ayuda ;).</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/GycLpBbh8xE?si=DyweW4sX81S86e6L" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleAnswer(2)">¿Puedo editar una tarea?</button>
+                            <div id="faq-answer-2" class="faq-answer">
+                                <p>¡Por supuesto! Puedes editar, borrar y marcar como completadas las tareas que quieras.</p>
+                                <div id = "faq-steps-2" class="faq-steps">
+                                    <ol>
+                                        <li>Haz click en "Lista de tareas" en el menú a tu izquierda.</li>
+                                        <li>Allí haz click en el tipo de tarea que quieres editar. Actuales, vencidas o completas.</li>
+                                        <li>A la derecha de cada tarea encontrarás un botón verde "editar". Seleccionarlo te llevará a un formulario identico al que usaste para crear la tarea.</li>
+                                        <li>También la puedes marcar como completada o directamente eliminarla.</li>
+                                    </ol>
+                                </div>
+                                <div class="center-content">
+                                    <p>No hay nada que no puedas modificar en tu tarea .Aquí tienes un pequeño video de ayuda ;).</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/GlnsrvBwoMg?si=ZMcc8oyJqoYLXZOP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleAnswer(3)">¿Cómo edito mi perfil?</button>
+                            <div id="faq-answer-3" class="faq-answer">
+                                <div id = "faq-steps-3" class="faq-steps">
+                                    <ol>
+                                        <li>Haz click en "Home" en el menú a tu izquierda, luego selecciona "Perfil".</li>
+                                        <li>Verás una pagina con la información actual de tu perfil. Para editarla, haz click en el botón azul "Editar perfil".</li>
+                                        <li>Encontrarás un formulario para cambiar usuario, nombres, apellidos y correo electronico. Éditalos a tu gusto.</li>
+                                        <li>Dale click a "Guardar" y verás como tu pérfil ya está actualizado. Así de fácil.</li>
+                                    </ol>
+                                </div>
+                                <div class="center-content">
+                                    <p>Aquí tienes un pequeño video de ayuda ;).</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/7PY5kCD3qRI?si=Ts_4UA-RwYTu4QSJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                                </div>
+                            </div>
+                        </div>
+
+                    <style>
+                        .faq-item {
+                            margin-bottom: 20px;
+                        }
+
+                        .faq-question {
+                            background-color: #3498db;
+                            color: white;
+                            border: none;
+                            padding: 10px;
+                            font-size: 16px;
+                            cursor: pointer;
+                            width: 100%;
+                            text-align: left;
+                            transition: background-color 0.3s;
+                        }
+
+                        .faq-question:hover {
+                            background-color: #2980b9;
+                        }
+
+                        .faq-answer {
+                            max-height: 0;
+                            overflow: hidden;
+                            transition: max-height 0.3s ease-out;
+                            padding: 10px;
+                            background-color: #ecf0f1;
+                            margin-top: 10px;
+                            border-radius: 5px;
+                            font-size: 14px;
+                            opacity: 0;
+                            transition: opacity 0.3s ease-out;
+                        }
+
+                        .faq-item.active .faq-answer {
+                            max-height: 200px; /* Establece la altura máxima que se desea para la respuesta */
+                            opacity: 1;
+                            transition: max-height 0.5s ease-in, opacity 0.3s ease-in;
+                        }
+
+                        .faq-steps ol {
+                            list-style: none;
+                            counter-reset: step;
+                            padding-left: 30px;
+                            display: block;
+                            flex-wrap: wrap;
+                        }
+
+                        .faq-steps li {
+                            position: relative;
+                            width: 45%;
+                            margin-bottom: 15px;
+                            padding-left: 30px;
+                        }
+
+                        .faq-steps li::before {
+                            content: counter(step);
+                            counter-increment: step;
+                            position: absolute;
+                            left: -20px;
+                            top: 0;
+                            background-color: #3498db;
+                            color: #fff;
+                            font-size: 18px;
+                            width: 30px;
+                            height: 30px;
+                            line-height: 30px;
+                            border-radius: 50%;
+                            text-align: center;
+                        }
+
+                        .faq-steps p {
+                            margin-top: 5px;}
+                            
+                        .center-content {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            text-align: center;
+                            }
+             
+                    </style>
+
+                    <script>
+                        function toggleAnswer(questionNumber) {
+                            var answer = document.getElementById('faq-answer-' + questionNumber);
+                            var question = document.querySelectorAll('.faq-item');
+
+                            question.forEach(function (item) {
+                                if (item !== answer.parentElement) {
+                                    item.classList.remove('active');
+                                    item.querySelector('.faq-answer').style.maxHeight = '0px';
+                                }
+                            });
+
+                            if (answer.style.maxHeight === '0px' || !answer.style.maxHeight) {
+                                answer.style.maxHeight = answer.scrollHeight + 'px';
+                                answer.parentElement.classList.add('active');
+                            } else {
+                                answer.style.maxHeight = '0px';
+                            }
+                        }
+                        
+                    </script>
 
                 </div>
-              </div>
             </div>
         </div>
-        <!-- /page content -->
+    </div>
+    <!-- /page content -->
 {% endblock %}
