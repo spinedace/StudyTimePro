@@ -96,7 +96,7 @@ class TaskDetail(LoginRequiredMixin, DetailView):
 
 class TaskCreate(LoginRequiredMixin, CreateView):
     model = Task
-    fields = ['title', 'description', 'created', 'due_date', 'priority', 'complete']
+    fields = ['title', 'description', 'created', 'due_date', 'priority']
     success_url = reverse_lazy('tasks')
 
     def form_valid(self, form):
@@ -112,7 +112,7 @@ class TaskCreate(LoginRequiredMixin, CreateView):
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task
-    fields = ['title', 'description', 'created', 'due_date', 'priority', 'complete']
+    fields = ['title', 'description', 'created', 'due_date', 'priority']
     success_url = reverse_lazy('tasks')
 
     def get_form(self, form_class=None):
@@ -183,7 +183,7 @@ class UserDetailView(LoginRequiredMixin, View):
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     template_name = 'STP/user_edit.html'
-    fields = ['username', 'first_name', 'last_name', 'email']
+    fields = [ 'first_name', 'last_name', 'email']
     success_url = reverse_lazy('user_detail')
 
     def get_object(self, queryset=None):
