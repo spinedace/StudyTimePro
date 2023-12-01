@@ -54,12 +54,23 @@
 
               {% csrf_token %}
               <!-- {{form.as_p}} -->
-               <label>{{form.username.label}}</label>
-              {{form.username}}
-              <label>{{form.password1.label}}</label>
-              {{form.password1}}
-              <label>{{form.password2.label}}</label>
-              {{form.password2}}
+                <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+              {{ form.username }}
+              
+              <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+              {{ form.first_name }}
+              
+              <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+              {{ form.last_name }}
+
+              <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+              {{ form.email }}
+
+              <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+              {{ form.password1 }}
+
+              <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+              {{ form.password2 }}
               <div>
                 <input  class="btn btn-default submit" type="submit" value="Registrarse">
                 <!-- <a class="btn btn-default submit" href="index">Entrar</a> 

@@ -27,7 +27,7 @@ import calendar as cal
 from django.views.generic import DetailView, UpdateView
 from django.contrib.auth.models import User
 from django import forms
-
+from .forms import CustomUserCreationForm
 
 # Create your views here.
 
@@ -43,15 +43,16 @@ class CustomLoginView(LoginView):
 
 class RegisterPage(FormView):
     template_name = 'STP/register.html'
-    form_class = UserCreationForm
+    form_class = CustomUserCreationForm  # Cambia a tu nuevo formulario personalizado
     redirect_authenticated_user = True
     success_url = reverse_lazy('tasks')
 
     def form_valid(self, form):
-         user = form.save()
-         if user is not None:
+        user = form.save()
+        if user is not None:
             login(self.request, user)
-         return super(RegisterPage,self).form_valid(form)
+        return super(RegisterPage, self).form_valid(form)
+
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
             return redirect('tasks')
@@ -59,7 +60,7 @@ class RegisterPage(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(context['form'])  # Añade esta línea para imprimir el contenido del formulario
+        print(context['form'])
         return context
 
 
