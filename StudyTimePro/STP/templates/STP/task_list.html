@@ -3,52 +3,6 @@
 
 
 {% block content %}
-<!-- {% if request.user.is_authenticated %}
-    <p>{{ request.user }}</p>
-    <a href="{% url 'logout' %}">Logout</a>
-{% else %}
-    <a href="{% url 'login' %}">Login</a>
-{% endif %} -->
-<!-- <hr />
-<h1>My To Do List</h1>
-<table>
-    <tr>
-        <th>Tareas</th>
-        <th></th>
-    </tr>
-    {% for task in tasks %}
-    <tr>
-        <td>{{ task.title }}</td>
-        <td>
-            {% if task.priority == 'choice1' %}
-                Baja
-            {% elif task.priority == 'choice2' %}
-                Media
-            {% elif task.priority == 'choice3' %}
-                Alta
-            {% else %}
-                Sin prioridad
-            {% endif %}
-        </td>
-        <td><a href="{% url 'task' task.id %}">View</a></td>
-        <td><a href="{% url 'task-update' task.id %}">Edit</a></td>
-        <td><a href="{% url 'task-delete' task.id %}">Delete</a></td>
-        <td> <form method="post" action="{% url 'task-toggle-complete' task.id %}">
-            {% csrf_token %}
-            <label for="task_{{ task.id }}"></label>
-            <input type="checkbox" id="task_{{ task.id }}" name="complete" {% if task.complete %}checked{% endif %}>
-            <input type="hidden" name="task_id" value="{{ task.id }}">
-        </form>
-        </td>
-    </tr>
-    {% empty %}
-    <h3>Vacío</h3>
-    {% endfor %}
-</table>
-
-<p>Total de tareas pendientes: {{ count }}</p>
-<a href="{% url 'task-create' %}">Crear Nueva Tarea</a> -->
-
 
 
 
@@ -56,7 +10,45 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
+<style>
+
+  input[type="checkbox"], input[type="radio"] {
+    transform: scale(1.5);
+  }
+
+  h2.table-header {
+    font-size: 24px;
+    }
+      /* Estilos para "Tareas Vencidas:" */
+  h2.table-header.red-blink {
+    color: red;
+    animation: blink 1s infinite; /* Parpadeo cada 1 segundo de forma infinita */
+  }
+
+  /* Animación de parpadeo */
+  @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  .table.table-striped.projects.task-table td,
+  .table.table-striped.projects.task-table th {
+    font-size: 16px; /* Puedes ajustar el tamaño de la letra según sea necesario */
+  }
+    /* Estilo específico para la tabla de Tareas Completadas */
+    .table-completed td
+     {
+    color: #999; /* Color de letra más claro */
+    text-decoration: line-through; /* Línea a través del texto (tachado) */
+  }
+
+
+
+</style>
 
 <!-- page content -->
 <div class="right_col" role="main">
@@ -86,18 +78,16 @@
             <table class="table table-striped projects task-table">
               <thead>
                 <tr>
-                  <th style="width: 1%">#</th>
                   <th style="width: 20%">Titulo</th>
                   <th style="width: 30%">Descripción</th>
                   <th style="width: 10%">Prioridad</th>
                   <th style="width: 5%">Completado</th>
-                  <th style="width: 25%">Edit</th>
+                  <th style="width: 25%">Editar</th>
                 </tr>
               </thead>
               <tbody>
                 {% for task in tasks_current %}
                 <tr>
-                  <td>#</td>
                   <td><a>{{ task.title }}</a>
                     <!-- <br />
                     <small>Created 01.01.2015</small> -->
@@ -135,25 +125,25 @@
               </tbody>
             </table>
 
-            <!-- Tareas Vencidas -->
-            <h2 class="table-header">
-              <i class="fas toggle-icon fa-chevron-down"></i>
-              Tareas Vencidas: {{ count_overdue }}</h2>
+            {% with overdue_count=count_overdue %}
+              <h2 class="table-header{% if overdue_count != 0 %} red-blink{% endif %}">
+                <i class="fas toggle-icon fa-chevron-down"></i>
+                Tareas Vencidas: {{ overdue_count }}
+              </h2>
+            {% endwith %}
             <table class="table table-striped projects task-table">
               <thead>
                 <tr>
-                  <th style="width: 1%">#</th>
                   <th style="width: 20%">Titulo</th>
                   <th style="width: 30%">Descripción</th>
                   <th style="width: 10%">Prioridad</th>
                   <th style="width: 5%">Completado</th>
-                  <th style="width: 25%">Edit</th>
+                  <th style="width: 25%">Editar</th>
                 </tr>
               </thead>
               <tbody>
                 {% for task in tasks_overdue %}
                 <tr>
-                  <td>#</td>
                   <td><a>{{ task.title }}</a>
                     <!-- <br />
                     <small>Created 01.01.2015</small> -->
@@ -194,22 +184,21 @@
             <!-- Tareas Completadas -->
             <h2 class="table-header">
               <i class="fas toggle-icon fa-chevron-down"></i>
-              Tareas Completadas: {{ count_completed }}</h2>
-            <table class="table table-striped projects task-table">
+              Tareas Completadas: {{ count_completed }}
+            </h2>
+            <table class="table table-striped projects task-table table-completed">
               <thead>
                 <tr>
-                  <th style="width: 1%">#</th>
                   <th style="width: 20%">Titulo</th>
                   <th style="width: 30%">Descripción</th>
                   <th style="width: 10%">Prioridad</th>
                   <th style="width: 5%">Completado</th>
-                  <th style="width: 25%">Edit</th>
+                  <th style="width: 25%">Editar</th>
                 </tr>
               </thead>
               <tbody>
                 {% for task in tasks_completed %}
                 <tr>
-                  <td>#</td>
                   <td><a>{{ task.title }}</a>
                     <!-- <br />
                     <small>Created 01.01.2015</small> -->
@@ -254,66 +243,72 @@
   </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+{% with lastLogin=user.last_login|date:"U" %}
 <script>
-  $(document).ready(function () {
-    // Oculta todas las tablas al cargar la página
-    $('.task-table').hide();
+ 
 
-    // Agrega un controlador de eventos al encabezado para mostrar/ocultar las tablas al hacer clic
-    $('.table-header').click(function () {
-      const table = $(this).next('.task-table');
-      table.slideToggle();
+    $(document).ready(function () {
+  
+  $('.task-table').hide();
 
-      // Cambia dinámicamente el ícono chevron-down / chevron-up
-      const icon = $(this).find('.toggle-icon');
-      icon.toggleClass('fa-chevron-down fa-chevron-up');
-    });
+  // Agrega un controlador de eventos al encabezado para mostrar/ocultar las tablas al hacer clic
+  $('.table-header').click(function () {
+    const table = $(this).next('.task-table');
+    table.slideToggle();
 
-    // Obtén todas las casillas de verificación en el documento
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    // Cambia dinámicamente el ícono chevron-down / chevron-up
+    const icon = $(this).find('.toggle-icon');
+    icon.toggleClass('fa-chevron-down fa-chevron-up');
+  });
 
-    // Agrega un controlador de eventos a cada casilla de verificación
-    checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener('change', function() {
-        const form = this.closest('form');
-        // Envía una solicitud POST al servidor
-        fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: {
-            'X-CSRFToken': getCookie('csrftoken') // Obtiene el token CSRF de las cookies
-          }
-        })
-        .then(() => {
-          // Recarga la página después de que se complete la solicitud
-          location.reload();
-        });
+  // Obtén todas las casillas de verificación en el documento
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+  // Agrega un controlador de eventos a cada casilla de verificación
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', function() {
+      const form = this.closest('form');
+      // Envía una solicitud POST al servidor
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: {
+          'X-CSRFToken': getCookie('csrftoken') // Obtiene el token CSRF de las cookies
+        }
+      })
+      .then(() => {
+        // Recarga la página después de que se complete la solicitud
+        location.reload();
       });
     });
+  });
+  });
 
-    // Muestra una notificación si hay tareas vencidas
-    const countOverdue = {{ count_overdue }};
-    if (countOverdue > 0) {
-      Swal.fire({
-        title: 'Tienes tareas vencidas',
-        text: `Hay ${countOverdue} tareas vencidas en tu lista.`,
-        icon: 'warning',
-        confirmButtonText: 'OK'
-      });
-    }
-
-    // Función para obtener el token CSRF de las cookies
     function getCookie(name) {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
       if (parts.length === 2) return parts.pop().split(';').shift();
     }
-  });
-</script>
 
+
+      // Muestra la notificación solo si lastLogin es igual a la hora actual
+      const lastLogin = {{ lastLogin }};
+      const now = Math.floor(new Date().getTime() / 1000);
+      const countOverdue = {{ count_overdue }};
+
+      if (lastLogin && lastLogin === now && countOverdue > 0) {
+        Swal.fire({
+          title: 'Tienes tareas vencidas',
+          text: `Hay ${countOverdue} tareas vencidas en tu lista.`,
+          icon: 'warning',
+          confirmButtonText: 'OK'
+        });
+      }
+    
+
+
+</script>
+{% endwith %}
 
 {% endblock content %}
 
