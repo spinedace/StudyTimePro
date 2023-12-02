@@ -55,30 +55,49 @@
 
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
 
-    <script>
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
           dateClick: function(info) {
-          window.location.href = '{% url "task-create" %}';
-          dateInput.value = datePicker.value;
-        },
+              window.location.href = '{% url "task-create" %}';
+              dateInput.value = datePicker.value;
+          },
           headerToolbar: {
               left: 'prev,next today',
               center: 'title',
               right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-            },
-            
+          },
           locale: "es",
           initialView: 'dayGridMonth',
           events: '{% url "get_tasks_as_json" %}',
           dayMaxEvents: true,
-        });
-        calendar.render();
+          eventDidMount: function(info) {
+              var priority = info.event.extendedProps.priority;
+              var color = getColorByPriority(priority);
+              info.el.style.backgroundColor = color;
+          },
       });
+      calendar.render();
 
-    </script>
+      // Function to get color based on priority
+      function getColorByPriority(priority) {
+          switch (priority) {
+              case 'choice1':
+                  return 'green';
+              case 'choice2':
+                  return 'orange';
+              case 'choice3':
+                  return 'red';
+              case 'choice4':
+                  return 'blue';
+              default:
+                  return 'gray';
+          }
+      }
+  });
+</script>
+
   <!-- Calendario fin -->  
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>

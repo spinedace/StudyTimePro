@@ -153,6 +153,7 @@ class GetTasksAsJSON(View):
                 'title': task.title,
                 'start': task.created.isoformat() if task.created else None,
                 'end': task.due_date.isoformat() if task.due_date else None,
+                'priority': task.priority,
             })
 
         return JsonResponse(task_data, safe=False)
