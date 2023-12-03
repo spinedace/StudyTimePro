@@ -26,8 +26,7 @@
                                 </div>
                                 <div class="center-content">
                                     <p>Aquí tienes un pequeño video de ayuda ;).</p>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/GycLpBbh8xE?si=DyweW4sX81S86e6L" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                                </div>
-                            </div>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/6i0M6s3Ik6k?si=ZKiW89F8A6wb6ALL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                            </div>
                         </div>
 
                         <div class="faq-item">
@@ -44,8 +43,7 @@
                                 </div>
                                 <div class="center-content">
                                     <p>No hay nada que no puedas modificar en tu tarea .Aquí tienes un pequeño video de ayuda ;).</p>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/GlnsrvBwoMg?si=ZMcc8oyJqoYLXZOP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                </div>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dYHv8sWrVF4?si=WI-2hzZHCS0GxoKH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                                </div>
                             </div>
                         </div>
 
@@ -62,8 +60,7 @@
                                 </div>
                                 <div class="center-content">
                                     <p>Aquí tienes un pequeño video de ayuda ;).</p>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/7PY5kCD3qRI?si=Ts_4UA-RwYTu4QSJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                                </div>
-                            </div>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/eRxIKZdHnOw?si=zNKea1Jtepq2oC1t" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                            </div>
                         </div>
 
                     <style>
@@ -90,15 +87,15 @@
                         .faq-answer {
                             max-height: 0;
                             overflow: hidden;
-                            transition: max-height 0.3s ease-out;
-                            padding: 10px;
+                            transition: max-height 0.3s ease-out, opacity 0.3s ease-out; /* Combinar ambas transiciones */                            padding: 10px;
                             background-color: #ecf0f1;
                             margin-top: 10px;
                             border-radius: 5px;
                             font-size: 14px;
                             opacity: 0;
-                            transition: opacity 0.3s ease-out;
                         }
+                        
+                        
 
                         .faq-item.active .faq-answer {
                             max-height: 200px; /* Establece la altura máxima que se desea para la respuesta */
@@ -166,6 +163,7 @@
                                 answer.parentElement.classList.add('active');
                             } else {
                                 answer.style.maxHeight = '0px';
+                                answer.parentElement.classList.remove('active');
                             }
                         }
                         
