@@ -29,6 +29,7 @@ from django.contrib.auth.models import User
 from django import forms
 from .forms import CustomUserCreationForm
 
+
 # Create your views here.
 
 #login/register
@@ -190,6 +191,8 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+    
+
 
 #Estadísticas
 
